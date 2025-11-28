@@ -36,7 +36,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           <div className="max-w-3xl animate-fade-in-up">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="h-[1px] w-12 bg-amber-500"></div>
-              <span className="text-amber-500 tracking-[0.3em] uppercase text-sm font-bold">Since 2024 • Maebashi</span>
+              <span className="text-amber-500 tracking-[0.3em] uppercase text-sm font-bold">Since 2021 • Maebashi</span>
             </div>
 
             <h1 className="text-6xl md:text-8xl font-serif font-bold mb-6 leading-tight text-white drop-shadow-2xl">
