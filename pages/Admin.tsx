@@ -48,9 +48,9 @@ const Admin: React.FC = () => {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, callback: (base64: string) => void) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Check size (limit to 450KB for Firestore safe margin)
-      if (file.size > 450 * 1024) {
-        alert("Image is too large! Please use an image under 450KB.");
+      // Check size (limit to 5MB for Storage)
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image is too large! Please use an image under 5MB.");
         return;
       }
       try {
@@ -67,9 +67,9 @@ const Admin: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check size (limit to 450KB for Firestore safe margin)
-    if (file.size > 450 * 1024) {
-      alert("Image is too large! Please use an image under 450KB.");
+    // Check size (limit to 5MB for Storage)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image is too large! Please use an image under 5MB.");
       return;
     }
 

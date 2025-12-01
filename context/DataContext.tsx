@@ -93,9 +93,15 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   };
 
   const uploadImage = async (base64: string, path: string): Promise<string> => {
-    // We are now storing Base64 directly in Firestore to avoid CORS issues.
-    // The 'path' argument is ignored but kept for interface compatibility.
-    return base64;
+    try {
+      const storageRef = ref(storage, path);
+      await uploadString(storageRef, base64, 'data_url');
+      const downloadURL = await getDownloadURL(storageRef);
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      throw error;
+    }
   };
 
   const updateMenuItem = async (updatedItem: MenuItem) => {
