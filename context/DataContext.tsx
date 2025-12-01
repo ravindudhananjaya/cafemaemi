@@ -11,6 +11,7 @@ interface DataContextType {
 
   // Admin Actions
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: () => void;
   logout: () => void;
 
@@ -47,11 +48,13 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Check session on load
   useEffect(() => {
     const session = sessionStorage.getItem('cafemaemi_auth');
     if (session === 'true') setIsAuthenticated(true);
+    setIsLoading(false);
   }, []);
 
   // Real-time Listeners
@@ -155,6 +158,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
       reviews,
       galleryItems,
       isAuthenticated,
+      isLoading,
       login,
       logout,
       updateMenuItem,

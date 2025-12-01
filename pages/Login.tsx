@@ -7,14 +7,14 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login, isAuthenticated } = useData();
+  const { login, isAuthenticated, isLoading } = useData();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (isAuthenticated) {
+    if (!isLoading && isAuthenticated) {
       navigate('/admin/dashboard');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, isLoading, navigate]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

@@ -6,7 +6,7 @@ import { Plus, Trash2, Edit, LogOut, Upload, Image as ImageIcon, Utensils, Star 
 
 const Admin: React.FC = () => {
   const {
-    isAuthenticated, logout,
+    isAuthenticated, logout, isLoading,
     menuItems, updateMenuItem, addMenuItem, deleteMenuItem,
     reviews, updateReview, addReview, deleteReview,
     galleryItems, addGalleryItem, deleteGalleryItem
@@ -17,6 +17,10 @@ const Admin: React.FC = () => {
   const [editingItem, setEditingItem] = useState<any>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center bg-stone-100">Loading...</div>;
+  }
 
   if (!isAuthenticated) {
     navigate('/admin');
