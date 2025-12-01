@@ -65,6 +65,7 @@ const App: React.FC = () => {
           <Route path="/reviews" element={<Navigate to="/en/reviews" replace />} />
           <Route path="/contact" element={<Navigate to="/en/contact" replace />} />
           <Route path="/gallery" element={<Navigate to="/en/gallery" replace />} />
+          <Route path="/crm" element={<Navigate to="/admin" replace />} />
 
           {/* Root redirect */}
           <Route path="/" element={<LanguageRedirect />} />
