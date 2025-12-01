@@ -32,6 +32,10 @@ const Admin: React.FC = () => {
     navigate('/admin');
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+
+  // --- FORMS ---
+
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -45,16 +49,34 @@ const Admin: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        // Check size (simple check for demo, 2MB limit recommendation)
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Image is too large! Please use an image under 2MB for local storage performance.");
-          return;
-        }
         const base64 = await convertToBase64(file);
         callback(base64);
       } catch (err) {
         console.error("Error uploading image", err);
+        alert("Failed to process image.");
       }
+    }
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const base64 = await convertToBase64(file);
+      await addGalleryItem({
+        id: Date.now().toString(),
+        src: base64,
+        alt: "Uploaded Image"
+      });
+      // Reset input value to allow uploading the same file again if needed
+      e.target.value = '';
+    } catch (error) {
+      console.error("Gallery upload failed:", error);
+      alert("Failed to upload image. Please check your connection and try again.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -306,10 +328,15 @@ const Admin: React.FC = () => {
                     id="gallery-upload"
                     className="hidden"
                     accept="image/*"
-                    onChange={(e) => handleImageUpload(e, (b64) => addGalleryItem({ id: Date.now().toString(), src: b64, alt: "Uploaded Image" }))}
+                    disabled={isUploading}
+                    onChange={handleGalleryUpload}
                   />
-                  <label htmlFor="gallery-upload" className="bg-amber-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-amber-700 cursor-pointer">
-                    <Upload size={18} /> Upload Image
+                  <label
+                    htmlFor="gallery-upload"
+                    className={`bg-amber-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-amber-700 cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {isUploading ? <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div> : <Upload size={18} />}
+                    {isUploading ? 'Uploading...' : 'Upload Image'}
                   </label>
                 </div>
               </div>
