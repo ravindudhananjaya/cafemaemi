@@ -2,7 +2,6 @@
     {
         "origin": [
             "*",
-            "https://cafemaemi.vercel.jp",
             "https://cafemaemi.vercel.app"
         ],
         "method": [
