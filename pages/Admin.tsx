@@ -94,12 +94,21 @@ const Admin: React.FC = () => {
       image: '',
       spicyLevel: 0
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (item) updateMenuItem(formData);
-      else addMenuItem(formData);
-      onClose();
+      setIsSubmitting(true);
+      try {
+        if (item) await updateMenuItem(formData);
+        else await addMenuItem(formData);
+        onClose();
+      } catch (error) {
+        console.error("Failed to save menu item:", error);
+        alert("Failed to save menu item. Please check your connection and try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     };
 
     return (
@@ -151,7 +160,9 @@ const Admin: React.FC = () => {
             <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (b64) => setFormData({ ...formData, image: b64 }))} />
           </div>
         </div>
-        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700">Save Item</button>
+        <button type="submit" disabled={isSubmitting} className={`w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
+          {isSubmitting ? 'Saving...' : 'Save Item'}
+        </button>
       </form>
     );
   };
@@ -166,12 +177,21 @@ const Admin: React.FC = () => {
       source: 'Direct',
       avatar: 'https://randomuser.me/api/portraits/lego/1.jpg'
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (item) updateReview(formData);
-      else addReview(formData);
-      onClose();
+      setIsSubmitting(true);
+      try {
+        if (item) await updateReview(formData);
+        else await addReview(formData);
+        onClose();
+      } catch (error) {
+        console.error("Failed to save review:", error);
+        alert("Failed to save review. Please check your connection and try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     };
 
     return (
@@ -201,7 +221,9 @@ const Admin: React.FC = () => {
             <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (b64) => setFormData({ ...formData, avatar: b64 }))} />
           </div>
         </div>
-        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700">Save Review</button>
+        <button type="submit" disabled={isSubmitting} className={`w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
+          {isSubmitting ? 'Saving...' : 'Save Review'}
+        </button>
       </form>
     );
   };
