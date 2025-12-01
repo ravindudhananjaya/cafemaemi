@@ -7,7 +7,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyAohPhjfjfUdanGk4ZM5j1Tm_-bCAd-9SI",
     authDomain: "cafemaemi-landingpage.firebaseapp.com",
     projectId: "cafemaemi-landingpage",
-    storageBucket: "cafemaemi-landingpage.firebasestorage.app",
+    storageBucket: "cafemaemi-landingpage.appspot.com",
     messagingSenderId: "890509421116",
     appId: "1:890509421116:web:a8949dc7419e32fdf0b139"
 };
