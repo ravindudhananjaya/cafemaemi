@@ -59,6 +59,13 @@ const App: React.FC = () => {
       <Router>
         <ScrollToTop />
         <Routes>
+          {/* Direct route redirects for better UX */}
+          <Route path="/menu" element={<Navigate to="/en/menu" replace />} />
+          <Route path="/about" element={<Navigate to="/en/about" replace />} />
+          <Route path="/reviews" element={<Navigate to="/en/reviews" replace />} />
+          <Route path="/contact" element={<Navigate to="/en/contact" replace />} />
+          <Route path="/gallery" element={<Navigate to="/en/gallery" replace />} />
+
           {/* Root redirect */}
           <Route path="/" element={<LanguageRedirect />} />
 
