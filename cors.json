@@ -1,8 +1,9 @@
 [
     {
         "origin": [
-            "*",
-            "https://cafemaemi.vercel.app"
+            "http://localhost:3000",
+            "https://cafemaemi.vercel.app",
+            "https://www.cafemaemi.com"
         ],
         "method": [
             "GET",

@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Language } from '../types';
 import { TEXTS } from '../constants';
 import { MapPin, Phone, Clock, Mail, Send } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 interface PageProps {
   lang: Language;
 }
 
 const Contact: React.FC<PageProps> = ({ lang }) => {
+  const { addContactMessage } = useData();
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleChange = (field: 'name' | 'email' | 'message', value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setIsSubmitting(true);
+    setFeedback(null);
+    try {
+      await addContactMessage(formData);
+      setFormData({ name: '', email: '', message: '' });
+      setFeedback({
+        type: 'success',
+        text: lang === Language.EN
+          ? 'Thank you! Your message has been sent.'
+          : 'ありがとうございます。メッセージを送信しました。'
+      });
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      setFeedback({
+        type: 'error',
+        text: lang === Language.EN
+          ? 'Something went wrong. Please try again.'
+          : '送信中にエラーが発生しました。もう一度お試しください。'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="bg-orange-50 min-h-screen py-32 mandala-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,24 +123,61 @@ const Contact: React.FC<PageProps> = ({ lang }) => {
             <h2 className="text-3xl font-bold mb-8 font-serif text-red-950">
               {lang === Language.EN ? "Send a Message" : "メッセージを送る"}
             </h2>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold text-stone-600 mb-2 uppercase tracking-wider">{TEXTS.name[lang.toLowerCase()]}</label>
-                  <input type="text" className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none" />
+                  <input
+                    type="text"
+                    className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none"
+                    value={formData.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    required
+                    autoComplete="name"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-stone-600 mb-2 uppercase tracking-wider">{TEXTS.email[lang.toLowerCase()]}</label>
-                  <input type="email" className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none" />
+                  <input
+                    type="email"
+                    className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    required
+                    autoComplete="email"
+                  />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-bold text-stone-600 mb-2 uppercase tracking-wider">{TEXTS.message[lang.toLowerCase()]}</label>
-                <textarea rows={6} className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none"></textarea>
+                <textarea
+                  rows={6}
+                  className="w-full bg-orange-50 border-amber-200 rounded-md focus:ring-2 focus:ring-amber-500 focus:border-transparent p-4 border transition-all outline-none"
+                  value={formData.message}
+                  onChange={(e) => handleChange('message', e.target.value)}
+                  required
+                ></textarea>
               </div>
-              <button type="submit" className="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold py-4 rounded-md hover:from-amber-700 hover:to-amber-800 transition duration-300 shadow-lg flex items-center justify-center gap-2 uppercase tracking-widest">
-                <span>{TEXTS.sendMessage[lang.toLowerCase()]}</span>
-                <Send size={18} />
+              {feedback && (
+                <div
+                  className={`p-3 rounded-md text-sm font-semibold ${
+                    feedback.type === 'success'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : 'bg-red-100 text-red-700 border border-red-200'
+                  }`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {feedback.text}
+                </div>
+              )}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-linear-to-r from-amber-600 to-amber-700 text-white font-bold py-4 rounded-md hover:from-amber-700 hover:to-amber-800 transition duration-300 shadow-lg flex items-center justify-center gap-2 uppercase tracking-widest ${isSubmitting ? 'opacity-60 cursor-not-allowed' : ''}`}
+              >
+                <span>{isSubmitting ? (lang === Language.EN ? 'Sending...' : '送信中...') : TEXTS.sendMessage[lang.toLowerCase()]}</span>
+                <Send size={18} className={isSubmitting ? 'animate-pulse' : ''} />
               </button>
             </form>
           </div>

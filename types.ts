@@ -32,6 +32,14 @@ export interface GalleryItem {
   category?: string;
 }
 
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  createdAt?: Date | null;
+}
+
 export interface Translation {
   [key: string]: {
     en: string;

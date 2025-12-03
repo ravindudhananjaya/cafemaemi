@@ -1,22 +1,29 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import { MenuItem, Review, GalleryItem } from '../types';
-import { Plus, Trash2, Edit, LogOut, Upload, Image as ImageIcon, Utensils, Star } from 'lucide-react';
+import { Plus, Trash2, Edit, LogOut, Upload, Image as ImageIcon, Utensils, Star, Mail } from 'lucide-react';
 
 const Admin: React.FC = () => {
   const {
     isAuthenticated, logout, isLoading,
     menuItems, updateMenuItem, addMenuItem, deleteMenuItem,
     reviews, updateReview, addReview, deleteReview,
-    galleryItems, addGalleryItem, deleteGalleryItem
+    galleryItems, addGalleryItem, deleteGalleryItem,
+    messages, deleteContactMessage
   } = useData();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'menu' | 'reviews' | 'gallery'>('menu');
+  const [activeTab, setActiveTab] = useState<'menu' | 'reviews' | 'gallery' | 'messages'>('menu');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const formatDate = (date?: Date | null) => {
+    if (!date) return 'Just now';
+    return new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short'
+    }).format(date);
+  };
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center bg-stone-100">Loading...</div>;
@@ -33,61 +40,32 @@ const Admin: React.FC = () => {
   };
 
   const [isUploading, setIsUploading] = useState(false);
-
-  // --- FORMS ---
-
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, callback: (base64: string) => void) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Check size (limit to 5MB for Storage)
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Image is too large! Please use an image under 5MB.");
-        return;
-      }
-      try {
-        const base64 = await convertToBase64(file);
-        callback(base64);
-      } catch (err) {
-        console.error("Error uploading image", err);
-        alert("Failed to process image.");
-      }
-    }
-  };
+  const [galleryProgress, setGalleryProgress] = useState(0);
 
   const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check size (limit to 5MB for Storage)
     if (file.size > 5 * 1024 * 1024) {
       alert("Image is too large! Please use an image under 5MB.");
       return;
     }
 
     setIsUploading(true);
+    setGalleryProgress(0);
     try {
-      const base64 = await convertToBase64(file);
       await addGalleryItem({
         id: Date.now().toString(),
-        src: base64,
+        src: '',
         alt: "Uploaded Image"
-      });
-      // Reset input value to allow uploading the same file again if needed
+      }, file, (value) => setGalleryProgress(value));
       e.target.value = '';
     } catch (error) {
       console.error("Gallery upload failed:", error);
       alert("Failed to upload image. Please check your connection and try again.");
     } finally {
       setIsUploading(false);
+      setGalleryProgress(0);
     }
   };
 
@@ -105,20 +83,53 @@ const Admin: React.FC = () => {
       image: '',
       spicyLevel: 0
     });
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string>(item?.image || '');
+    const previewRef = useRef<string | null>(null);
+    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+      return () => {
+        if (previewRef.current && previewRef.current.startsWith('blob:')) {
+          URL.revokeObjectURL(previewRef.current);
+        }
+      };
+    }, []);
+
+    const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image is too large! Please use an image under 5MB.');
+        return;
+      }
+      setImageFile(file);
+      if (previewRef.current && previewRef.current.startsWith('blob:')) {
+        URL.revokeObjectURL(previewRef.current);
+      }
+      const url = URL.createObjectURL(file);
+      previewRef.current = url;
+      setPreview(url);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsSubmitting(true);
+      if (imageFile) {
+        setUploadProgress(0);
+      }
       try {
-        if (item) await updateMenuItem(formData);
-        else await addMenuItem(formData);
+        if (item) await updateMenuItem(formData, imageFile, (value) => setUploadProgress(value));
+        else await addMenuItem(formData, imageFile, (value) => setUploadProgress(value));
         onClose();
       } catch (error) {
         console.error("Failed to save menu item:", error);
         alert("Failed to save menu item. Please check your connection and try again.");
       } finally {
         setIsSubmitting(false);
+        setUploadProgress(null);
+        setImageFile(null);
       }
     };
 
@@ -167,9 +178,14 @@ const Admin: React.FC = () => {
         <div>
           <label className="block text-xs font-bold mb-1">Image</label>
           <div className="flex items-center gap-4">
-            {formData.image && <img src={formData.image} className="w-16 h-16 object-cover rounded" alt="Preview" />}
-            <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (b64) => setFormData({ ...formData, image: b64 }))} />
+            {(preview || formData.image) && (
+              <img src={preview || formData.image} className="w-16 h-16 object-cover rounded" alt="Preview" />
+            )}
+            <input type="file" accept="image/*" onChange={handleImageSelect} />
           </div>
+          {uploadProgress !== null && (
+            <p className="text-xs text-stone-500 mt-1">Uploading {Math.round(uploadProgress * 100)}%</p>
+          )}
         </div>
         <button type="submit" disabled={isSubmitting} className={`w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
           {isSubmitting ? 'Saving...' : 'Save Item'}
@@ -188,20 +204,53 @@ const Admin: React.FC = () => {
       source: 'Direct',
       avatar: 'https://randomuser.me/api/portraits/lego/1.jpg'
     });
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string>(item?.avatar || formData.avatar || '');
+    const previewRef = useRef<string | null>(null);
+    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+      return () => {
+        if (previewRef.current && previewRef.current.startsWith('blob:')) {
+          URL.revokeObjectURL(previewRef.current);
+        }
+      };
+    }, []);
+
+    const handleAvatarSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image is too large! Please use an image under 5MB.');
+        return;
+      }
+      setAvatarFile(file);
+      if (previewRef.current && previewRef.current.startsWith('blob:')) {
+        URL.revokeObjectURL(previewRef.current);
+      }
+      const url = URL.createObjectURL(file);
+      previewRef.current = url;
+      setPreview(url);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsSubmitting(true);
+      if (avatarFile) {
+        setUploadProgress(0);
+      }
       try {
-        if (item) await updateReview(formData);
-        else await addReview(formData);
+        if (item) await updateReview(formData, avatarFile, (value) => setUploadProgress(value));
+        else await addReview(formData, avatarFile, (value) => setUploadProgress(value));
         onClose();
       } catch (error) {
         console.error("Failed to save review:", error);
         alert("Failed to save review. Please check your connection and try again.");
       } finally {
         setIsSubmitting(false);
+        setUploadProgress(null);
+        setAvatarFile(null);
       }
     };
 
@@ -228,9 +277,12 @@ const Admin: React.FC = () => {
         <div>
           <label className="block text-xs font-bold mb-1">Avatar Image</label>
           <div className="flex items-center gap-4">
-            {formData.avatar && <img src={formData.avatar} className="w-16 h-16 object-cover rounded-full" alt="Avatar Preview" />}
-            <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (b64) => setFormData({ ...formData, avatar: b64 }))} />
+            {(preview || formData.avatar) && <img src={preview || formData.avatar} className="w-16 h-16 object-cover rounded-full" alt="Avatar Preview" />}
+            <input type="file" accept="image/*" onChange={handleAvatarSelect} />
           </div>
+          {uploadProgress !== null && (
+            <p className="text-xs text-stone-500 mt-1">Uploading {Math.round(uploadProgress * 100)}%</p>
+          )}
         </div>
         <button type="submit" disabled={isSubmitting} className={`w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
           {isSubmitting ? 'Saving...' : 'Save Review'}
@@ -274,6 +326,12 @@ const Admin: React.FC = () => {
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition ${activeTab === 'gallery' ? 'bg-red-900 text-white shadow-lg' : 'bg-white text-stone-600 hover:bg-stone-200'}`}
           >
             <ImageIcon size={18} /> Gallery
+          </button>
+          <button
+            onClick={() => setActiveTab('messages')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition ${activeTab === 'messages' ? 'bg-red-900 text-white shadow-lg' : 'bg-white text-stone-600 hover:bg-stone-200'}`}
+          >
+            <Mail size={18} /> Messages
           </button>
         </div>
 
@@ -369,7 +427,7 @@ const Admin: React.FC = () => {
                     className={`bg-amber-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-amber-700 cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isUploading ? <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div> : <Upload size={18} />}
-                    {isUploading ? 'Uploading...' : 'Upload Image'}
+                    {isUploading ? `Uploading ${Math.round(galleryProgress * 100)}%` : 'Upload Image'}
                   </label>
                 </div>
               </div>
@@ -385,6 +443,42 @@ const Admin: React.FC = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* MESSAGES TAB */}
+          {activeTab === 'messages' && (
+            <div>
+              <div className="flex justify-between mb-6">
+                <h2 className="text-xl font-bold text-stone-700">Messages ({messages.length})</h2>
+                <p className="text-sm text-stone-500">Visitor inquiries arrive in real time</p>
+              </div>
+              {messages.length === 0 ? (
+                <div className="text-center py-16 text-stone-500 border border-dashed border-stone-200 rounded-lg">
+                  <p>No messages yet. Once a visitor uses the contact form, it will appear here.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {messages.map((msg) => (
+                    <div key={msg.id} className="border border-stone-200 rounded-lg p-4 shadow-sm hover:shadow-md transition relative">
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                        <div>
+                          <p className="font-bold text-red-950">{msg.name}</p>
+                          <a href={`mailto:${msg.email}`} className="text-sm text-amber-600 hover:underline break-all">{msg.email}</a>
+                          <p className="text-xs text-stone-400 mt-1">{formatDate(msg.createdAt)}</p>
+                        </div>
+                        <button
+                          onClick={() => deleteContactMessage(msg.id)}
+                          className="self-start flex items-center gap-1 text-red-600 hover:bg-red-50 px-3 py-1 rounded-full text-sm"
+                        >
+                          <Trash2 size={16} /> Delete
+                        </button>
+                      </div>
+                      <p className="mt-4 text-stone-700 whitespace-pre-line">{msg.message}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
