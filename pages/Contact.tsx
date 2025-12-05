@@ -3,6 +3,7 @@ import { Language } from '../types';
 import { TEXTS } from '../constants';
 import { MapPin, Phone, Clock, Mail, Send } from 'lucide-react';
 import { useData } from '../context/DataContext';
+import SEO from '../components/SEO';
 
 interface PageProps {
   lang: Language;
@@ -160,11 +161,10 @@ const Contact: React.FC<PageProps> = ({ lang }) => {
               </div>
               {feedback && (
                 <div
-                  className={`p-3 rounded-md text-sm font-semibold ${
-                    feedback.type === 'success'
+                  className={`p-3 rounded-md text-sm font-semibold ${feedback.type === 'success'
                       ? 'bg-green-100 text-green-700 border border-green-200'
                       : 'bg-red-100 text-red-700 border border-red-200'
-                  }`}
+                    }`}
                   role="status"
                   aria-live="polite"
                 >

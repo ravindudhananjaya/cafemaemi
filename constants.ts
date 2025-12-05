@@ -36,7 +36,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "白ごはん、マトンカレー、チキンカレー、野菜カレー、ジャガクミン、サラダ、2種類のピックル、豆スープ、パパド、デザート。",
     price: 1390,
     category: 'sets',
-    spicyLevel: 2,
+
     image: "/images/dal_bhat.png"
   },
   {
@@ -47,7 +47,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "白ごはん、マトンカレー、野菜カレー、サラダ、ピックル、豆スープ、デザート。",
     price: 1090,
     category: 'sets',
-    spicyLevel: 3,
+
     image: "/images/dal_bhat.png"
   },
   {
@@ -58,7 +58,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "白ごはん、チキンカレー、野菜カレー、サラダ、ピックル、豆スープ、デザート。",
     price: 990,
     category: 'sets',
-    spicyLevel: 2,
+
     image: "/images/dal_bhat.png"
   },
   {
@@ -131,7 +131,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "バターとクリームの濃厚なトマトベースのカレー。",
     price: 750,
     category: 'curry',
-    spicyLevel: 1,
+
     image: "/images/butter_chicken.png"
   },
   {
@@ -142,7 +142,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "スパイシーなマトンカレー。",
     price: 750,
     category: 'curry',
-    spicyLevel: 3,
+
     image: "/images/mutton_curry.png"
   },
   {
@@ -153,7 +153,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "カッテージチーズ入りほうれん草カレー。",
     price: 700,
     category: 'curry',
-    spicyLevel: 1,
+
     image: "https://images.unsplash.com/photo-1596797038530-2c107a1a19d6?auto=format&fit=crop&w=800&q=80"
   },
 
@@ -166,7 +166,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "スパイス香るチキンの炊き込みご飯。（仕上がりまで約30分）",
     price: 1190,
     category: 'naan_rice',
-    spicyLevel: 3,
+
     image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -241,7 +241,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "揚げモモをピリ辛チリソースで和えました。",
     price: 650,
     category: 'noodles_momo',
-    spicyLevel: 3,
+
     image: "/images/momo.png"
   },
   {

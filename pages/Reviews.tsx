@@ -3,6 +3,7 @@ import { Language } from '../types';
 import { TEXTS } from '../constants';
 import { Star, MessageSquareQuote } from 'lucide-react';
 import { useData } from '../context/DataContext';
+import SEO from '../components/SEO';
 
 interface PageProps {
   lang: Language;
@@ -14,6 +15,12 @@ const Reviews: React.FC<PageProps> = ({ lang }) => {
 
   return (
     <div className="bg-orange-50 min-h-screen py-32 mandala-bg">
+      <SEO
+        title={lang === Language.EN ? "Reviews" : "口コミ"}
+        description={lang === Language.EN
+          ? "See what our guests are saying about their dining experience at Cafe Maemi."
+          : "Cafe Maemiでのお食事について、お客様の声をご覧ください。"}
+      />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-serif font-bold text-red-950 mb-4">{TEXTS.reviews[lang.toLowerCase()]}</h1>

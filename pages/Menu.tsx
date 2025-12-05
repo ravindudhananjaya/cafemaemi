@@ -3,6 +3,7 @@ import { Language } from '../types';
 import { TEXTS } from '../constants';
 import { Flame } from 'lucide-react';
 import { useData } from '../context/DataContext';
+import SEO from '../components/SEO';
 
 interface PageProps {
     lang: Language;
@@ -29,6 +30,12 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
 
     return (
         <div className="bg-orange-50 min-h-screen pb-24 mandala-bg">
+            <SEO
+                title={lang === Language.EN ? "Menu" : "メニュー"}
+                description={lang === Language.EN
+                    ? "Explore our extensive menu of curries, naan, tandoori dishes, and more."
+                    : "カレー、ナン、タンドリー料理など、豊富なメニューをご覧ください。"}
+            />
             {/* Header Section */}
             <div className="bg-red-950 text-amber-50 py-16 mb-12 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/black-scales.png")' }}></div>
@@ -41,6 +48,22 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Lunch Time Service Banner */}
+                <div className="bg-white/80 backdrop-blur-sm border-2 border-amber-200 rounded-xl p-6 mb-12 shadow-lg max-w-4xl mx-auto text-center relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-300 via-red-500 to-amber-300"></div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-red-900 mb-2 font-serif">
+                        {lang === Language.EN ? "Lunch Time Drink Service" : "ランチタイム◎ ドリンクサービス"}
+                    </h2>
+                    <p className="text-amber-700 font-bold text-lg mb-4 flex items-center justify-center gap-2">
+                        <span className="bg-amber-100 px-3 py-1 rounded-full text-sm">AM11:00 〜 PM15:00</span>
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-stone-700 font-medium">
+                        <span className="flex items-center gap-2"><span className="w-2 h-2 bg-red-400 rounded-full"></span>{lang === Language.EN ? "Cola" : "コーラ"}</span>
+                        <span className="flex items-center gap-2"><span className="w-2 h-2 bg-red-400 rounded-full"></span>{lang === Language.EN ? "Oolong Tea" : "ウーロン茶"}</span>
+                        <span className="flex items-center gap-2"><span className="w-2 h-2 bg-red-400 rounded-full"></span>{lang === Language.EN ? "Chai (Hot/Ice)" : "チャイ (ホット/アイス)"}</span>
+                        <span className="flex items-center gap-2"><span className="w-2 h-2 bg-red-400 rounded-full"></span>{lang === Language.EN ? "Coffee (Hot/Ice)" : "コーヒー (ホット/アイス)"}</span>
+                    </div>
+                </div>
                 {/* Category Filter - Centered Pills */}
                 <div className="flex flex-wrap justify-center gap-4 mb-16 sticky top-24 z-30 bg-orange-50/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-amber-200/50 max-w-4xl mx-auto">
                     {categories.map((cat) => (
@@ -68,12 +91,7 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                                     alt={lang === Language.EN ? item.nameEn : item.nameJa}
                                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                 />
-                                {item.spicyLevel && item.spicyLevel > 0 && (
-                                    <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-amber-500 px-2 py-1 rounded flex items-center gap-1">
-                                        <Flame size={12} fill="currentColor" />
-                                        <span className="text-xs font-bold">{item.spicyLevel}</span>
-                                    </div>
-                                )}
+
                             </div>
 
                             {/* Content Section */}

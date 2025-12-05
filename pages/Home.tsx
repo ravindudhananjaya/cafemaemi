@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Language } from '../types';
 import { TEXTS } from '../constants';
-import { ArrowRight, Star, ChevronDown, Quote } from 'lucide-react';
+import { ArrowRight, Star, MapPin, Clock, Phone } from 'lucide-react';
 import { useData } from '../context/DataContext';
+import SEO from '../components/SEO';
 
 interface PageProps {
   lang: Language;
@@ -12,14 +13,23 @@ interface PageProps {
 const Home: React.FC<PageProps> = ({ lang }) => {
   const { menuItems, reviews, galleryItems } = useData();
 
-  // Filter top 3 items for preview
-  const featuredMenu = menuItems.slice(0, 3);
-  const featuredReviews = reviews.slice(0, 2);
-  // Preview first 4 gallery images
-  const featuredGallery = galleryItems.slice(0, 4);
+  // Get featured items (e.g., top 3 items)
+  const featuredItems = menuItems.slice(0, 3);
+
+  // Get recent reviews (top 3)
+  const recentReviews = reviews.slice(0, 3);
+
+  // Get recent gallery images (top 4)
+  const recentGallery = galleryItems.slice(0, 4);
 
   return (
-    <div className="flex flex-col">
+    <div className="bg-brand-cream min-h-screen">
+      <SEO
+        title={lang === Language.EN ? "Home" : "ホーム"}
+        description={lang === Language.EN
+          ? "Authentic Indian and Nepalese cuisine in Maebashi. Enjoy our famous curry, naan, and momo."
+          : "前橋の本格インド・ネパール料理。自慢のカレー、ナン、モモをお楽しみください。"}
+      />
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">

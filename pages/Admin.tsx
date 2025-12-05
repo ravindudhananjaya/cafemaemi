@@ -81,8 +81,7 @@ const Admin: React.FC = () => {
       price: 0,
       priceLarge: 0,
       category: 'curry',
-      image: '',
-      spicyLevel: 0
+      image: ''
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(item?.image || '');
@@ -177,10 +176,7 @@ const Admin: React.FC = () => {
               <option value="noodles_momo">Noodles & MoMo</option>
             </select>
           </div>
-          <div>
-            <label className="block text-xs font-bold mb-1">Spice Level (0-5)</label>
-            <input type="number" min="0" max="5" className="w-full border p-2 rounded" value={formData.spicyLevel || 0} onChange={e => setFormData({ ...formData, spicyLevel: Number(e.target.value) })} />
-          </div>
+
         </div>
         <div>
           <label className="block text-xs font-bold mb-1">Image</label>
