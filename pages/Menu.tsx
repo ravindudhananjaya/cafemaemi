@@ -15,10 +15,12 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
     const categories = [
         { id: 'all', labelEn: 'All', labelJa: 'すべて' },
         { id: 'curry', labelEn: 'Curry', labelJa: 'カレー' },
-        { id: 'naan', labelEn: 'Naan', labelJa: 'ナン' },
-        { id: 'tandoori', labelEn: 'Tandoori', labelJa: 'タンドリー' },
+        { id: 'naan_rice', labelEn: 'Naan/Rice', labelJa: 'ナン・ライス' },
         { id: 'sides', labelEn: 'Sides', labelJa: 'サイドメニュー' },
         { id: 'drinks', labelEn: 'Drinks', labelJa: 'ドリンク' },
+        { id: 'sets', labelEn: 'Sets', labelJa: 'セット' },
+        { id: 'dessert', labelEn: 'Dessert', labelJa: 'デザート' },
+        { id: 'noodles_momo', labelEn: 'Noodles & MoMo', labelJa: '麺類・モモ' },
     ];
 
     const filteredItems = activeCategory === 'all'
@@ -46,8 +48,8 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
                             className={`px-6 py-2 rounded-lg text-sm font-bold uppercase tracking-widest transition-all duration-300 border-2 ${activeCategory === cat.id
-                                    ? 'bg-red-900 border-red-900 text-amber-50 shadow-md transform scale-105'
-                                    : 'bg-transparent border-transparent text-stone-600 hover:border-amber-400 hover:text-red-900'
+                                ? 'bg-red-900 border-red-900 text-amber-50 shadow-md transform scale-105'
+                                : 'bg-transparent border-transparent text-stone-600 hover:border-amber-400 hover:text-red-900'
                                 }`}
                         >
                             {lang === Language.EN ? cat.labelEn : cat.labelJa}
@@ -81,9 +83,16 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                                         <h3 className="text-xl font-bold text-red-950 font-serif leading-tight pr-2">
                                             {lang === Language.EN ? item.nameEn : item.nameJa}
                                         </h3>
-                                        <span className="text-lg font-bold text-amber-600 whitespace-nowrap">
-                                            ¥{item.price}
-                                        </span>
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-lg font-bold text-amber-600 whitespace-nowrap">
+                                                {item.priceLarge ? `M ¥${item.price}` : `¥${item.price}`}
+                                            </span>
+                                            {item.priceLarge && (
+                                                <span className="text-lg font-bold text-amber-600 whitespace-nowrap">
+                                                    L ¥{item.priceLarge}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="w-12 h-0.5 bg-amber-200 mb-3"></div>
                                     <p className="text-stone-600 text-sm leading-relaxed mb-4">

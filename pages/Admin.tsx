@@ -79,6 +79,7 @@ const Admin: React.FC = () => {
       descriptionEn: '',
       descriptionJa: '',
       price: 0,
+      priceLarge: 0,
       category: 'curry',
       image: '',
       spicyLevel: 0
@@ -155,19 +156,25 @@ const Admin: React.FC = () => {
             <textarea className="w-full border p-2 rounded" value={formData.descriptionJa} onChange={e => setFormData({ ...formData, descriptionJa: e.target.value })} />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <div>
-            <label className="block text-xs font-bold mb-1">Price (¥)</label>
+            <label className="block text-xs font-bold mb-1">Price (M) (¥)</label>
             <input required type="number" className="w-full border p-2 rounded" value={formData.price} onChange={e => setFormData({ ...formData, price: Number(e.target.value) })} />
+          </div>
+          <div>
+            <label className="block text-xs font-bold mb-1">Price (L) (¥)</label>
+            <input type="number" className="w-full border p-2 rounded" value={formData.priceLarge || ''} placeholder="Optional" onChange={e => setFormData({ ...formData, priceLarge: Number(e.target.value) })} />
           </div>
           <div>
             <label className="block text-xs font-bold mb-1">Category</label>
             <select className="w-full border p-2 rounded" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value as any })}>
               <option value="curry">Curry</option>
-              <option value="naan">Naan</option>
-              <option value="tandoori">Tandoori</option>
+              <option value="naan_rice">Naan/Rice</option>
               <option value="sides">Sides</option>
               <option value="drinks">Drinks</option>
+              <option value="sets">Sets</option>
+              <option value="dessert">Dessert</option>
+              <option value="noodles_momo">Noodles & MoMo</option>
             </select>
           </div>
           <div>

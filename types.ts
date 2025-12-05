@@ -10,7 +10,8 @@ export interface MenuItem {
   descriptionEn: string;
   descriptionJa: string;
   price: number;
-  category: 'curry' | 'naan' | 'tandoori' | 'sides' | 'drinks' | 'sets' | 'rice';
+  priceLarge?: number;
+  category: 'curry' | 'naan_rice' | 'sides' | 'drinks' | 'sets' | 'dessert' | 'noodles_momo';
   image?: string;
   spicyLevel?: number; // 1-5
 }

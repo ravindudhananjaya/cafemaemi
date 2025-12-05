@@ -165,7 +165,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Spiced aromatic rice with chicken. (Takes ~30 mins)",
     descriptionJa: "スパイス香るチキンの炊き込みご飯。（仕上がりまで約30分）",
     price: 1190,
-    category: 'rice',
+    category: 'naan_rice',
     spicyLevel: 3,
     image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
   },
@@ -176,7 +176,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Nepalese style fried rice with chicken.",
     descriptionJa: "ネパール風チキンチャーハン。",
     price: 790,
-    category: 'rice',
+    category: 'naan_rice',
     image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80"
   },
 
@@ -188,7 +188,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Naan stuffed with melting cheese.",
     descriptionJa: "とろけるチーズたっぷりのナン。",
     price: 650,
-    category: 'naan',
+    category: 'naan_rice',
     image: "/images/cheese_naan.png"
   },
   {
@@ -198,7 +198,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Naan topped with aromatic garlic.",
     descriptionJa: "香ばしいガーリックをトッピングしたナン。",
     price: 390,
-    category: 'naan',
+    category: 'naan_rice',
     image: "https://images.unsplash.com/photo-1573102524002-d663a1e2960c?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -208,7 +208,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Freshly baked traditional naan.",
     descriptionJa: "焼きたてのプレーンナン。",
     price: 290,
-    category: 'naan',
+    category: 'naan_rice',
     image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80"
   },
 
@@ -220,7 +220,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Steamed Nepalese dumplings.",
     descriptionJa: "ネパール風蒸し餃子。",
     price: 500,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "/images/momo.png"
   },
   {
@@ -230,7 +230,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Momos served in a warm, spiced soup.",
     descriptionJa: "スパイスの効いたスープに入ったモモ。",
     price: 690,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "/images/momo.png"
   },
   {
@@ -240,7 +240,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Fried momos tossed in spicy chilli sauce.",
     descriptionJa: "揚げモモをピリ辛チリソースで和えました。",
     price: 650,
-    category: 'sides',
+    category: 'noodles_momo',
     spicyLevel: 3,
     image: "/images/momo.png"
   },
@@ -251,7 +251,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Crispy hollow balls filled with spiced water and potatoes.",
     descriptionJa: "スパイスウォーターとジャガイモが入ったサクサクのボール。",
     price: 490,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -261,7 +261,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Fried pastry with savory filling.",
     descriptionJa: "スパイスで味付けしたジャガイモなどの具を包んで揚げたスナック。",
     price: 250,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -271,7 +271,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Nepalese style stir-fried noodles with chicken.",
     descriptionJa: "ネパール風チキン焼きそば。",
     price: 600,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -281,7 +281,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Himalayan noodle soup with spices.",
     descriptionJa: "スパイスラーメン。",
     price: 890,
-    category: 'sides',
+    category: 'noodles_momo',
     image: "https://images.unsplash.com/photo-1625242661157-e7e8d297d866?auto=format&fit=crop&w=800&q=80"
   },
   {
@@ -291,7 +291,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionEn: "Spiced chicken leg roasted in tandoor.",
     descriptionJa: "タンドールで焼き上げたスパイシーな骨付きチキン。",
     price: 230,
-    category: 'tandoori',
+    category: 'sides',
     image: "https://images.unsplash.com/photo-1628294895950-98052523e036?auto=format&fit=crop&w=800&q=80"
   }
 ];
