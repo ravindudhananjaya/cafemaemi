@@ -1,5 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 
 interface SEOProps {
     title: string;
@@ -18,28 +17,52 @@ const SEO: React.FC<SEOProps> = ({
 }) => {
     const siteTitle = "Cafe Maemi | Authentic Indian & Nepalese Cuisine in Maebashi";
 
-    return (
-        <Helmet>
-            {/* Standard Metadata */}
-            <title>{`${title} | Cafe Maemi`}</title>
-            <meta name="description" content={description} />
-            <meta name="keywords" content={keywords} />
+    useEffect(() => {
+        // Update Title
+        document.title = `${title} | Cafe Maemi`;
 
-            {/* Open Graph / Facebook */}
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={url} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:image" content={image} />
+        // Helper to update meta tags
+        const updateMeta = (name: string, content: string) => {
+            let element = document.querySelector(`meta[name="${name}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute('name', name);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('content', content);
+        };
 
-            {/* Twitter */}
-            <meta property="twitter:card" content="summary_large_image" />
-            <meta property="twitter:url" content={url} />
-            <meta property="twitter:title" content={title} />
-            <meta property="twitter:description" content={description} />
-            <meta property="twitter:image" content={image} />
-        </Helmet>
-    );
+        const updateOgMeta = (property: string, content: string) => {
+            let element = document.querySelector(`meta[property="${property}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute('property', property);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('content', content);
+        };
+
+        // Update Meta Tags
+        updateMeta('description', description);
+        updateMeta('keywords', keywords);
+
+        // Open Graph
+        updateOgMeta('og:type', 'website');
+        updateOgMeta('og:url', url);
+        updateOgMeta('og:title', title);
+        updateOgMeta('og:description', description);
+        updateOgMeta('og:image', image);
+
+        // Twitter
+        updateOgMeta('twitter:card', 'summary_large_image');
+        updateOgMeta('twitter:url', url);
+        updateOgMeta('twitter:title', title);
+        updateOgMeta('twitter:description', description);
+        updateOgMeta('twitter:image', image);
+
+    }, [title, description, keywords, image, url]);
+
+    return null;
 };
 
 export default SEO;
