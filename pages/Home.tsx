@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Language } from '../types';
 import { TEXTS } from '../constants';
-import { ArrowRight, Star, MapPin, Clock, Phone } from 'lucide-react';
+import { ArrowRight, Star, MapPin, Clock, Phone, ChevronDown, Quote } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import SEO from '../components/SEO';
 
@@ -148,7 +148,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {featuredMenu.map((item) => (
+            {featuredItems.map((item) => (
               <div key={item.id} className="group cursor-pointer">
                 <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md">
                   <img src={item.image} alt={item.nameEn} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
@@ -216,7 +216,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {featuredGallery.map((item, idx) => (
+            {recentGallery.map((item, idx) => (
               <div key={item.id} className={`h-64 overflow-hidden rounded-lg border-2 border-amber-900/50 hover:border-amber-500 transition-colors ${idx % 2 !== 0 ? 'mt-8 md:mt-12' : ''}`}>
                 <img src={item.src} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-110" alt={item.alt} />
               </div>
@@ -237,7 +237,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {featuredReviews.map((review) => (
+            {recentReviews.map((review) => (
               <div key={review.id} className="bg-white p-10 shadow-xl rounded-xl border border-amber-100 relative hover:-translate-y-1 transition-transform duration-300">
                 <Quote size={48} className="text-amber-100 absolute top-6 right-6" />
                 <p className="text-stone-600 italic mb-8 relative z-10 text-lg leading-relaxed font-serif">
