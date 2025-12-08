@@ -90,6 +90,8 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                                     src={item.image}
                                     alt={lang === Language.EN ? item.nameEn : item.nameJa}
                                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                    loading="lazy"
+                                    decoding="async"
                                 />
 
                             </div>

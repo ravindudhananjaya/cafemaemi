@@ -37,6 +37,8 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             src="/images/hero.png"
             alt="Indian Spices"
             className="w-full h-full object-cover scale-105 animate-pulse-slow"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
           <div className="absolute inset-0 bg-brand-red/30 mix-blend-multiply"></div>
@@ -102,9 +104,9 @@ const Home: React.FC<PageProps> = ({ lang }) => {
 
               <div className="mt-10 flex items-center gap-4">
                 <div className="flex -space-x-4">
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/men/32.jpg" alt="" />
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/42.jpg" alt="" />
+                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" loading="lazy" />
+                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy" />
+                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/42.jpg" alt="" loading="lazy" />
                 </div>
                 <div>
                   <div className="flex text-amber-500">
@@ -126,6 +128,8 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                   src="https://plus.unsplash.com/premium_photo-1754258414541-5fd6f1c0a12e?w=1080"
                   alt="Chef Cooking Authentic Indian Cuisine"
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 text-white">
                   <p className="font-serif italic text-xl">"Spices are the soul of our kitchen."</p>
@@ -151,7 +155,13 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             {featuredItems.map((item) => (
               <div key={item.id} className="group cursor-pointer">
                 <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md">
-                  <img src={item.image} alt={item.nameEn} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
+                  <img
+                    src={item.image}
+                    alt={item.nameEn}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-brand-red font-bold shadow-sm border border-red-100">
                     ¥{item.price}
                   </div>
@@ -218,7 +228,13 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {recentGallery.map((item, idx) => (
               <div key={item.id} className={`h-64 overflow-hidden rounded-lg border-2 border-amber-900/50 hover:border-amber-500 transition-colors ${idx % 2 !== 0 ? 'mt-8 md:mt-12' : ''}`}>
-                <img src={item.src} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-110" alt={item.alt} />
+                <img
+                  src={item.src}
+                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-110"
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             ))}
           </div>
@@ -244,7 +260,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                   "{lang === Language.EN ? review.textEn : review.textJa}"
                 </p>
                 <div className="flex items-center gap-4 border-t border-amber-50 pt-6">
-                  <img src={review.avatar} alt={review.author} className="w-12 h-12 rounded-full border-2 border-amber-200" />
+                  <img src={review.avatar} alt={review.author} className="w-12 h-12 rounded-full border-2 border-amber-200" loading="lazy" />
                   <div>
                     <div className="font-bold text-brand-red">{review.author}</div>
                     <div className="flex text-amber-500 text-xs mt-1">

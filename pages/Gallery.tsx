@@ -37,6 +37,8 @@ const Gallery: React.FC<PageProps> = ({ lang }) => {
                 src={img.src}
                 alt={img.alt}
                 className="w-full h-auto object-cover transform transition-transform duration-1000 group-hover:scale-110 filter brightness-90 group-hover:brightness-100"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-red-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                 <span className="text-amber-400 font-serif text-xl italic">

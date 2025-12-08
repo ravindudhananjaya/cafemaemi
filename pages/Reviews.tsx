@@ -41,7 +41,7 @@ const Reviews: React.FC<PageProps> = ({ lang }) => {
             <div key={review.id} className="bg-white p-8 rounded-lg shadow-lg border-t-4 border-amber-500 hover:transform hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <img src={review.avatar} alt={review.author} className="w-14 h-14 rounded-full object-cover border-2 border-amber-100" />
+                  <img src={review.avatar} alt={review.author} className="w-14 h-14 rounded-full object-cover border-2 border-amber-100" loading="lazy" />
                   <div>
                     <h4 className="font-bold text-red-950 text-lg">{review.author}</h4>
                   </div>
