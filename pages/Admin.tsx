@@ -345,7 +345,7 @@ const Admin: React.FC = () => {
                       <th className="p-3">Name</th>
                       <th className="p-3">Category</th>
                       <th className="p-3">Price</th>
-                      <th className="p-3">Order</th>
+                      <th className="p-3">Sort Number</th>
                       <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
@@ -380,7 +380,19 @@ const Admin: React.FC = () => {
                             <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full uppercase font-bold">{item.category}</span>
                           </td>
                           <td className="p-3 font-mono">¥{item.price}</td>
-                          <td className="p-3 font-mono text-stone-500">{item.sortOrder || 0}</td>
+                          <td className="p-3">
+                            <input
+                              type="number"
+                              className="w-16 border p-1 rounded font-mono text-center"
+                              defaultValue={item.sortOrder || 0}
+                              onBlur={(e) => {
+                                const newOrder = Number(e.target.value);
+                                if (newOrder !== (item.sortOrder || 0)) {
+                                  updateMenuItem({ ...item, sortOrder: newOrder }, null);
+                                }
+                              }}
+                            />
+                          </td>
                           <td className="p-3 text-right space-x-2">
                             <button onClick={() => { setEditingItem(item); setIsModalOpen(true); }} className="p-2 text-blue-600 hover:bg-blue-50 rounded"><Edit size={18} /></button>
                             <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-600 hover:bg-red-50 rounded"><Trash2 size={18} /></button>
