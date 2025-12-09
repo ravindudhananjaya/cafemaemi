@@ -14,6 +14,7 @@ export interface MenuItem {
   category: 'curry' | 'naan_rice' | 'sides' | 'drinks' | 'sets' | 'dessert' | 'noodles_momo';
   image?: string;
   isFeatured?: boolean;
+  sortOrder?: number;
 }
 
 export interface Review {

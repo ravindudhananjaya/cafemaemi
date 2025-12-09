@@ -25,8 +25,10 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
     ];
 
     const filteredItems = activeCategory === 'all'
-        ? menuItems
-        : menuItems.filter(item => item.category === activeCategory);
+        ? [...menuItems].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+        : menuItems
+            .filter(item => item.category === activeCategory)
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 
     return (
         <div className="bg-orange-50 min-h-screen pb-24 mandala-bg">
