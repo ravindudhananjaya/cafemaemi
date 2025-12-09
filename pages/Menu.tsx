@@ -119,7 +119,7 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                                             <span className="text-lg font-bold text-amber-600 whitespace-nowrap">
                                                 {item.priceLarge ? `M ¥${item.price}` : `¥${item.price}`}
                                             </span>
-                                            {item.priceLarge && (
+                                            {item.priceLarge > 0 && (
                                                 <span className="text-lg font-bold text-amber-600 whitespace-nowrap">
                                                     L ¥{item.priceLarge}
                                                 </span>
