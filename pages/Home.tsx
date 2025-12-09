@@ -155,14 +155,20 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {featuredItems.map((item) => (
               <div key={item.id} className="group cursor-pointer">
-                <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md">
-                  <img
-                    src={item.image}
-                    alt={item.nameEn}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md bg-stone-200">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.nameEn}
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-stone-400">
+                      <span className="font-serif italic opacity-50">No Image</span>
+                    </div>
+                  )}
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-brand-red font-bold shadow-sm border border-red-100">
                     ¥{item.price}
                   </div>

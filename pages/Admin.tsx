@@ -16,6 +16,7 @@ const Admin: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'menu' | 'reviews' | 'gallery' | 'messages'>('menu');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
+  const [sortOption, setSortOption] = useState<'name' | 'price' | 'category'>('name');
 
   const formatDate = (date?: Date | null) => {
     if (!date) return 'Just now';
@@ -342,9 +343,20 @@ const Admin: React.FC = () => {
             <div>
               <div className="flex justify-between mb-6">
                 <h2 className="text-xl font-bold text-stone-700">Menu Items ({menuItems.length})</h2>
-                <button onClick={() => { setEditingItem(null); setIsModalOpen(true); }} className="bg-amber-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-amber-700">
-                  <Plus size={18} /> Add Item
-                </button>
+                <div className="flex gap-4">
+                  <select
+                    className="border p-2 rounded bg-white"
+                    value={sortOption}
+                    onChange={(e) => setSortOption(e.target.value as any)}
+                  >
+                    <option value="name">Sort by Name</option>
+                    <option value="price">Sort by Price</option>
+                    <option value="category">Sort by Category</option>
+                  </select>
+                  <button onClick={() => { setEditingItem(null); setIsModalOpen(true); }} className="bg-amber-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-amber-700">
+                    <Plus size={18} /> Add Item
+                  </button>
+                </div>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -358,28 +370,41 @@ const Admin: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {menuItems.map(item => (
-                      <tr key={item.id} className="border-b border-stone-100 hover:bg-stone-50">
-                        <td className="p-3">
-                          <img src={item.image} alt={item.nameEn} className="w-12 h-12 rounded object-cover bg-stone-200" />
-                        </td>
-                        <td className="p-3">
-                          <div className="font-bold flex items-center gap-2">
-                            {item.nameEn}
-                            {item.isFeatured && <Star size={14} className="text-amber-500 fill-amber-500" />}
-                          </div>
-                          <div className="text-xs text-stone-500">{item.nameJa}</div>
-                        </td>
-                        <td className="p-3">
-                          <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full uppercase font-bold">{item.category}</span>
-                        </td>
-                        <td className="p-3 font-mono">¥{item.price}</td>
-                        <td className="p-3 text-right space-x-2">
-                          <button onClick={() => { setEditingItem(item); setIsModalOpen(true); }} className="p-2 text-blue-600 hover:bg-blue-50 rounded"><Edit size={18} /></button>
-                          <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-600 hover:bg-red-50 rounded"><Trash2 size={18} /></button>
-                        </td>
-                      </tr>
-                    ))}
+                    {[...menuItems]
+                      .sort((a, b) => {
+                        if (sortOption === 'name') return a.nameEn.localeCompare(b.nameEn);
+                        if (sortOption === 'price') return a.price - b.price;
+                        if (sortOption === 'category') return a.category.localeCompare(b.category);
+                        return 0;
+                      })
+                      .map(item => (
+                        <tr key={item.id} className="border-b border-stone-100 hover:bg-stone-50">
+                          <td className="p-3">
+                            {item.image ? (
+                              <img src={item.image} alt={item.nameEn} className="w-12 h-12 rounded object-cover bg-stone-200" />
+                            ) : (
+                              <div className="w-12 h-12 rounded bg-stone-200 flex items-center justify-center text-stone-400">
+                                <ImageIcon size={20} />
+                              </div>
+                            )}
+                          </td>
+                          <td className="p-3">
+                            <div className="font-bold flex items-center gap-2">
+                              {item.nameEn}
+                              {item.isFeatured && <Star size={14} className="text-amber-500 fill-amber-500" />}
+                            </div>
+                            <div className="text-xs text-stone-500">{item.nameJa}</div>
+                          </td>
+                          <td className="p-3">
+                            <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full uppercase font-bold">{item.category}</span>
+                          </td>
+                          <td className="p-3 font-mono">¥{item.price}</td>
+                          <td className="p-3 text-right space-x-2">
+                            <button onClick={() => { setEditingItem(item); setIsModalOpen(true); }} className="p-2 text-blue-600 hover:bg-blue-50 rounded"><Edit size={18} /></button>
+                            <button onClick={() => deleteMenuItem(item.id)} className="p-2 text-red-600 hover:bg-red-50 rounded"><Trash2 size={18} /></button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
