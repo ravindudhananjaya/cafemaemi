@@ -18,7 +18,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
   const featuredItems = featured.length > 0 ? featured.slice(0, 3) : menuItems.slice(0, 3);
 
   // Get recent reviews (top 3)
-  const recentReviews = reviews.slice(0, 3);
+  const recentReviews = reviews.slice(0, 4);
 
   // Get recent gallery images (top 4)
   const recentGallery = galleryItems.slice(0, 4);
