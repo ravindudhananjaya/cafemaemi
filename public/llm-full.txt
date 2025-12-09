@@ -1,41 +1,50 @@
-# Cafe Maemi - Full Website Content
+# Cafe Maemi - Full Documentation
 
-## About Us
-Cafe Maemi brings the authentic soul food of India and Nepal to Maebashi. Our chefs use a symphony of spices to create dishes that are both traditional and innovative. We pride ourselves on our warm hospitality and cozy, modern atmosphere.
+## Overview
+Cafe Maemi is an authentic Indian and Nepalese restaurant located in Maebashi, Gunma, Japan. We pride ourselves on serving "soul food" from the Himalayas, prepared with a symphony of spices.
 
-## Menu Details
 
-### Lunch Time Drink Service (11:00 - 15:00)
-Free drink with lunch sets: Cola, Oolong Tea, Chai (Hot/Ice), Coffee (Hot/Ice).
 
-### Curries
-- **Butter Chicken Curry**: Rich tomato gravy with butter and cream. Mild spice.
-- **Mutton Curry**: Tender mutton in spicy gravy. Spicy.
-- **Spinach Paneer**: Spinach curry with cottage cheese. Mild.
 
-### Naan & Rice
-- **Cheese Naan**: Our most popular item! Naan stuffed with melting cheese.
-- **Garlic Naan**: Topped with aromatic garlic.
-- **Chicken Biryani**: Spiced aromatic rice with chicken.
-- **Chicken Fried Rice**: Nepalese style fried rice.
+
+## Menu Items (from constants.ts)
 
 ### Sets
-- **Special Rice Set**: The ultimate feast with Mutton Curry, Chicken Curry, Veg Curry, and sides.
-- **Maemi Set A/B**: Choose your favorite curries with Tandoori Chicken, Salad, Naan/Rice, and Dessert.
+- **Special Rice Set** (¥1390): Mutton Curry, Chicken Curry, Veg Curry, Potato Cumin, Salad, 2 Pickles, Dal Soup, Papad, Dessert.
+- **Nepali Mutton Rice Set** (¥1090): Mutton Curry, Veg Curry, Salad, Pickle, Dal Soup, Dessert.
+- **Nepali Chicken Rice Set** (¥990): Chicken Curry, Veg Curry, Salad, Pickle, Dal Soup, Dessert.
+- **Maemi Set A** (¥1450): 3 Curries, Soup, Tandoori Chicken, Salad, Naan/Rice, Dessert.
+- **Maemi Set B** (¥1290): 2 Curries, Tandoori Chicken, Salad, Naan/Rice, Dessert.
+- **Keema Curry Set** (¥990): Chicken mince curry, Salad, Naan/Rice, Dessert.
+- **Seafood Curry Set** (¥890): Seafood curry, Salad, Naan/Rice, Dessert.
+- **Butter Curry Set** (¥990): Butter Curry, Salad, Naan/Rice, Dessert.
+- **Mutton Curry Set** (¥1090): Mutton Curry, Salad, Naan/Rice, Dessert.
+
+### Curries
+- **Butter Chicken Curry** (¥750): Rich tomato gravy with butter and cream. (Featured)
+- **Mutton Curry** (¥750): Tender mutton in spicy gravy. (Featured)
+- **Spinach Paneer** (¥700): Spinach curry with cottage cheese.
+
+### Naan & Rice
+- **Chicken Biryani (M)** (¥1190): Spiced aromatic rice with chicken.
+- **Chicken Fried Rice** (¥790): Nepalese style fried rice.
+- **Cheese Naan** (¥650): Naan stuffed with melting cheese. (Featured)
+- **Garlic Naan** (¥390): Naan topped with aromatic garlic.
+- **Plain Naan** (¥290): Freshly baked traditional naan.
 
 ### Noodles & MoMo
-- **Steam MoMo**: Steamed Nepalese dumplings.
-- **Soup MoMo**: Momos in warm, spiced soup.
-- **Chilly MoMo**: Fried momos in spicy chilli sauce.
-- **Chicken ChowMein**: Stir-fried noodles.
-- **Chicken Thukpa**: Himalayan noodle soup.
+- **Steam MoMo** (¥500): Steamed Nepalese dumplings.
+- **Soup MoMo** (¥690): Momos in warm, spiced soup.
+- **Chilly MoMo** (¥650): Fried momos in spicy chilli sauce.
+- **Panipuri** (¥490): Crispy hollow balls with spiced water.
+- **Samosa** (¥250): Fried pastry with savory filling.
+- **Chicken ChowMein** (¥600): Nepalese style stir-fried noodles.
+- **Chicken Thukpa** (¥890): Himalayan noodle soup.
 
-## Reviews
-Our customers love us!
-- "Best Indian food in Maebashi!"
-- "The Cheese Naan is a must-try."
-- "Authentic flavors and great atmosphere."
+### Sides
+- **Tandoori Chicken** (¥230): Spiced chicken leg roasted in tandoor.
 
-## Location & Hours
-We are located in Maebashi, Gunma. Open for lunch and dinner.
-Please check our website or Google Maps for the latest opening hours.
+## Contact Information
+- **Address**: Maebashi, Gunma
+- **Website**: https://cafemaemi.com
+- **Google Maps**: https://maps.app.goo.gl/MznqEuTyFZ72EY9N6

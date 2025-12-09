@@ -66,9 +66,12 @@ const Navbar: React.FC<NavbarProps> = ({ lang }) => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center gap-3 group">
-            <Link to={`/${currentLangPath}`} className="flex flex-col">
-              <span className="font-serif text-2xl font-bold text-brand-cream tracking-wide group-hover:text-amber-400 transition-colors duration-300">Cafe Maemi</span>
-              <span className="text-[0.65rem] uppercase tracking-[0.25em] text-amber-500 group-hover:text-amber-300 transition-colors duration-300">Indian & Nepalese</span>
+            <Link to={`/${currentLangPath}`} className="flex items-center gap-3">
+              <img src="/images/icon.png" alt="Cafe Maemi Logo" className="w-10 h-10 rounded-full object-cover border-2 border-amber-500/50" />
+              <div className="flex flex-col">
+                <span className="font-serif text-2xl font-bold text-brand-cream tracking-wide group-hover:text-amber-400 transition-colors duration-300">Cafe Maemi</span>
+                <span className="text-[0.65rem] uppercase tracking-[0.25em] text-amber-500 group-hover:text-amber-300 transition-colors duration-300">Indian & Nepalese</span>
+              </div>
             </Link>
           </div>
 
