@@ -261,7 +261,6 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                   "{lang === Language.EN ? review.textEn : review.textJa}"
                 </p>
                 <div className="flex items-center gap-4 border-t border-amber-50 pt-6">
-                  <img src={review.avatar} alt={review.author} className="w-12 h-12 rounded-full border-2 border-amber-200" loading="lazy" />
                   <div>
                     <div className="font-bold text-brand-red">{review.author}</div>
                     <div className="flex text-amber-500 text-xs mt-1">

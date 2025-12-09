@@ -306,8 +306,7 @@ export const MOCK_REVIEWS: Review[] = [
     rating: 5,
     textEn: "The ambiance is stunning. The Butter Chicken is absolute perfection. Best Indian food in Maebashi!",
     textJa: "素晴らしい雰囲気。バターチキンは完璧です。前橋で一番美味しいインド料理店！",
-    source: 'Google',
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg"
+    source: 'Google'
   },
   {
     id: '2',

@@ -23,7 +23,6 @@ export interface Review {
   textEn: string;
   textJa: string;
   source: 'Google' | 'Direct';
-  avatar?: string;
 }
 
 export interface GalleryItem {
