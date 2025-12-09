@@ -293,9 +293,9 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             {lang === Language.EN ? "Experience the true taste of India and Nepal. Book your table now or order online for a taste of royalty." : "インドとネパールの真の味を体験してください。今すぐ予約するか、オンラインで注文して、王宮の味をお楽しみください。"}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link to="/contact" className="px-10 py-4 bg-amber-500 text-brand-red font-bold rounded-sm hover:bg-amber-400 transition shadow-xl shadow-amber-900/50 uppercase tracking-widest">
+            <a href="https://maps.app.goo.gl/MznqEuTyFZ72EY9N6" target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-amber-500 text-brand-red font-bold rounded-sm hover:bg-amber-400 transition shadow-xl shadow-amber-900/50 uppercase tracking-widest">
               {lang === Language.EN ? "Visit Us" : "店舗に行く"}
-            </Link>
+            </a>
             <Link to="/menu" className="px-10 py-4 border-2 border-amber-500 text-amber-500 font-bold rounded-sm hover:bg-amber-500/10 transition uppercase tracking-widest">
               {TEXTS.viewMenu[lang.toLowerCase()]}
             </Link>
