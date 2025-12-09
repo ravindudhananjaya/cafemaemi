@@ -81,7 +81,8 @@ const Admin: React.FC = () => {
       price: 0,
       priceLarge: 0,
       category: 'curry',
-      image: ''
+      image: '',
+      isFeatured: false
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(item?.image || '');
@@ -177,6 +178,16 @@ const Admin: React.FC = () => {
             </select>
           </div>
 
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isFeatured"
+            checked={formData.isFeatured || false}
+            onChange={e => setFormData({ ...formData, isFeatured: e.target.checked })}
+            className="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 border-gray-300"
+          />
+          <label htmlFor="isFeatured" className="text-sm font-bold text-stone-700">Chef's Favorite (Featured on Home)</label>
         </div>
         <div>
           <label className="block text-xs font-bold mb-1">Image</label>
@@ -278,7 +289,7 @@ const Admin: React.FC = () => {
           <textarea className="w-full border p-2 rounded" value={formData.textJa} onChange={e => setFormData({ ...formData, textJa: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-bold mb-1">Avatar Image</label>
+          <label className="block text-xs font-bold mb-1">Avatar</label>
           <div className="flex items-center gap-4">
             {(preview || formData.avatar) && <img src={preview || formData.avatar} className="w-16 h-16 object-cover rounded-full" alt="Avatar Preview" />}
             <input type="file" accept="image/*" onChange={handleAvatarSelect} />
@@ -368,7 +379,10 @@ const Admin: React.FC = () => {
                           <img src={item.image} alt={item.nameEn} className="w-12 h-12 rounded object-cover bg-stone-200" />
                         </td>
                         <td className="p-3">
-                          <div className="font-bold">{item.nameEn}</div>
+                          <div className="font-bold flex items-center gap-2">
+                            {item.nameEn}
+                            {item.isFeatured && <Star size={14} className="text-amber-500 fill-amber-500" />}
+                          </div>
                           <div className="text-xs text-stone-500">{item.nameJa}</div>
                         </td>
                         <td className="p-3">
@@ -403,7 +417,10 @@ const Admin: React.FC = () => {
                       <button onClick={() => { setEditingItem(review); setIsModalOpen(true); }} className="p-1 bg-blue-100 text-blue-600 rounded"><Edit size={16} /></button>
                       <button onClick={() => deleteReview(review.id)} className="p-1 bg-red-100 text-red-600 rounded"><Trash2 size={16} /></button>
                     </div>
-                    <div className="font-bold">{review.author} <span className="text-amber-500 text-sm">({review.rating}★)</span></div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <img src={review.avatar} alt={review.author} className="w-10 h-10 rounded-full object-cover border border-stone-200" />
+                      <div className="font-bold">{review.author} <span className="text-amber-500 text-sm">({review.rating}★)</span></div>
+                    </div>
                     <p className="text-sm text-stone-500 mt-2 line-clamp-2">{review.textEn}</p>
                   </div>
                 ))}

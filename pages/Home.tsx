@@ -13,8 +13,9 @@ interface PageProps {
 const Home: React.FC<PageProps> = ({ lang }) => {
   const { menuItems, reviews, galleryItems } = useData();
 
-  // Get featured items (e.g., top 3 items)
-  const featuredItems = menuItems.slice(0, 3);
+  // Get featured items (Chef's Favorites) or fallback to first 3
+  const featured = menuItems.filter(item => item.isFeatured);
+  const featuredItems = featured.length > 0 ? featured.slice(0, 3) : menuItems.slice(0, 3);
 
   // Get recent reviews (top 3)
   const recentReviews = reviews.slice(0, 3);

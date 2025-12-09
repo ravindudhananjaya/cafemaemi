@@ -131,6 +131,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "バターとクリームの濃厚なトマトベースのカレー。",
     price: 750,
     category: 'curry',
+    isFeatured: true,
 
     image: "/images/butter_chicken.png"
   },
@@ -142,6 +143,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "スパイシーなマトンカレー。",
     price: 750,
     category: 'curry',
+    isFeatured: true,
 
     image: "/images/mutton_curry.png"
   },
@@ -189,6 +191,7 @@ export const MENU_ITEMS: MenuItem[] = [
     descriptionJa: "とろけるチーズたっぷりのナン。",
     price: 650,
     category: 'naan_rice',
+    isFeatured: true,
     image: "/images/cheese_naan.png"
   },
   {

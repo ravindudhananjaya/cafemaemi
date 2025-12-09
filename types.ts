@@ -13,6 +13,7 @@ export interface MenuItem {
   priceLarge?: number;
   category: 'curry' | 'naan_rice' | 'sides' | 'drinks' | 'sets' | 'dessert' | 'noodles_momo';
   image?: string;
+  isFeatured?: boolean;
 }
 
 export interface Review {
