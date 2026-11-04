@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Language } from '../types';
 import { TEXTS } from '../constants';
-import { ArrowRight, Star, MapPin, Clock, Phone, ChevronDown, Quote } from 'lucide-react';
+import { ArrowRight, Star, ChevronDown, Quote, Bike } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import SEO from '../components/SEO';
+import DeliveryPartners from '../components/DeliveryPartners';
+import DishImage from '../components/DishImage';
 
 interface PageProps {
   lang: Language;
@@ -22,6 +24,8 @@ const Home: React.FC<PageProps> = ({ lang }) => {
 
   // Get recent gallery images (top 4)
   const recentGallery = galleryItems.slice(0, 4);
+
+  const base = `/${lang === Language.EN ? 'en' : 'ja'}`;
 
   return (
     <div className="bg-brand-cream min-h-screen">
@@ -65,12 +69,23 @@ const Home: React.FC<PageProps> = ({ lang }) => {
 
             <div className="flex flex-col sm:flex-row items-start gap-6">
               <Link
-                to="/menu"
+                to={`${base}/menu`}
                 className="px-10 py-4 bg-amber-600 text-white font-bold rounded-sm hover:bg-amber-700 transition duration-300 shadow-lg shadow-amber-900/50 flex items-center gap-3 group"
               >
                 {TEXTS.viewMenu[lang.toLowerCase()]}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+              <a
+                href="#delivery"
+                className="px-10 py-4 border border-white/40 text-white font-bold rounded-sm hover:bg-white/10 hover:border-amber-400 transition duration-300 backdrop-blur-sm flex items-center gap-3"
+              >
+                <Bike size={20} className="text-amber-400" />
+                {lang === Language.EN ? "Order Delivery" : "デリバリー注文"}
+              </a>
+            </div>
+
+            <div className="mt-10">
+              <DeliveryPartners lang={lang} variant="badges" />
             </div>
           </div>
         </div>
@@ -99,16 +114,12 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                 }
               </p>
 
-              <Link to="/about" className="text-brand-red font-bold border-b-2 border-brand-red hover:text-amber-600 hover:border-amber-600 transition-colors pb-1">
+              <Link to={`${base}/about`} className="text-brand-red font-bold border-b-2 border-brand-red hover:text-amber-600 hover:border-amber-600 transition-colors pb-1">
                 {lang === Language.EN ? "Read Our Full Story" : "物語の続きを読む"}
               </Link>
 
               <div className="mt-10 flex items-center gap-4">
-                <div className="flex -space-x-4">
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" loading="lazy" />
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy" />
-                  <img className="w-12 h-12 rounded-full border-2 border-white shadow-md" src="https://randomuser.me/api/portraits/women/42.jpg" alt="" loading="lazy" />
-                </div>
+                <div className="w-14 h-14 rounded-full bg-brand-red text-amber-400 flex items-center justify-center font-serif text-xl font-bold shadow-lg shadow-amber-900/20">4.8</div>
                 <div>
                   <div className="flex text-amber-500">
                     <Star fill="currentColor" size={16} />
@@ -117,7 +128,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                     <Star fill="currentColor" size={16} />
                     <Star fill="currentColor" size={16} />
                   </div>
-                  <p className="text-sm text-brand-red font-medium">Loved by 500+ locals</p>
+                  <p className="text-sm text-brand-red font-medium">{lang === Language.EN ? "Loved by 500+ locals" : "500人以上の地元客に愛されています"}</p>
                 </div>
               </div>
             </div>
@@ -156,19 +167,11 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             {featuredItems.map((item) => (
               <div key={item.id} className="group cursor-pointer">
                 <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md bg-stone-200">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.nameEn}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-stone-400">
-                      <span className="font-serif italic opacity-50">No Image</span>
-                    </div>
-                  )}
+                  <DishImage
+                    src={item.image}
+                    alt={lang === Language.EN ? item.nameEn : item.nameJa}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-brand-red font-bold shadow-sm border border-red-100">
                     ¥{item.price}
                   </div>
@@ -179,7 +182,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                 <p className="text-stone-600 text-sm line-clamp-2 mb-4 h-10">
                   {lang === Language.EN ? item.descriptionEn : item.descriptionJa}
                 </p>
-                <Link to="/menu" className="text-amber-600 text-sm font-bold uppercase tracking-wider hover:text-brand-red flex items-center gap-1 group-hover:gap-2 transition-all">
+                <Link to={`${base}/menu`} className="text-amber-600 text-sm font-bold uppercase tracking-wider hover:text-brand-red flex items-center gap-1 group-hover:gap-2 transition-all">
                   {lang === Language.EN ? "View Details" : "詳細を見る"} <ArrowRight size={14} />
                 </Link>
               </div>
@@ -187,16 +190,21 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           </div>
 
           <div className="mt-16 text-center">
-            <Link to="/menu" className="inline-block border-2 border-brand-red text-brand-red px-10 py-3 font-bold hover:bg-brand-red hover:text-white transition-colors duration-300 rounded-sm uppercase tracking-widest">
+            <Link to={`${base}/menu`} className="inline-block border-2 border-brand-red text-brand-red px-10 py-3 font-bold hover:bg-brand-red hover:text-white transition-colors duration-300 rounded-sm uppercase tracking-widest">
               {TEXTS.viewMenu[lang.toLowerCase()]}
             </Link>
           </div>
         </div>
       </section>
 
+      {/* Delivery Section */}
+      <div id="delivery" className="scroll-mt-16">
+        <DeliveryPartners lang={lang} />
+      </div>
+
       {/* Highlights Banner */}
       <section className="py-20 bg-brand-red text-white relative">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cubes.png")' }}></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.18),transparent_60%)]"></div>
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative z-10">
           <div className="p-6 border border-amber-500/30 rounded-lg hover:bg-white/5 transition duration-300 backdrop-blur-sm">
             <div className="text-4xl font-serif text-amber-400 mb-2">20+</div>
@@ -227,7 +235,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                 {lang === Language.EN ? "A glimpse into the vibrant world of Cafe Maemi." : "カフェマエミの鮮やかな世界を覗いてみてください。"}
               </p>
             </div>
-            <Link to="/gallery" className="flex items-center gap-2 text-amber-500 hover:text-white transition-colors uppercase tracking-widest text-sm font-bold">
+            <Link to={`${base}/gallery`} className="flex items-center gap-2 text-amber-500 hover:text-white transition-colors uppercase tracking-widest text-sm font-bold">
               {lang === Language.EN ? "See All Photos" : "すべての写真を見る"} <ArrowRight size={18} />
             </Link>
           </div>
@@ -278,7 +286,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             ))}
           </div>
           <div className="mt-12 text-center">
-            <Link to="/reviews" className="text-brand-red font-bold hover:text-amber-600 transition-colors border-b-2 border-transparent hover:border-amber-600">
+            <Link to={`${base}/reviews`} className="text-brand-red font-bold hover:text-amber-600 transition-colors border-b-2 border-transparent hover:border-amber-600">
               {lang === Language.EN ? "Read More Reviews" : "もっとレビューを見る"}
             </Link>
           </div>
@@ -302,7 +310,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             <a href="https://maps.app.goo.gl/MznqEuTyFZ72EY9N6" target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-amber-500 text-brand-red font-bold rounded-sm hover:bg-amber-400 transition shadow-xl shadow-amber-900/50 uppercase tracking-widest">
               {lang === Language.EN ? "Visit Us" : "店舗に行く"}
             </a>
-            <Link to="/menu" className="px-10 py-4 border-2 border-amber-500 text-amber-500 font-bold rounded-sm hover:bg-amber-500/10 transition uppercase tracking-widest">
+            <Link to={`${base}/menu`} className="px-10 py-4 border-2 border-amber-500 text-amber-500 font-bold rounded-sm hover:bg-amber-500/10 transition uppercase tracking-widest">
               {TEXTS.viewMenu[lang.toLowerCase()]}
             </Link>
           </div>

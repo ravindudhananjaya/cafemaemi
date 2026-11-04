@@ -4,6 +4,7 @@ import { TEXTS } from '../constants';
 import { Flame } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import SEO from '../components/SEO';
+import DishImage from '../components/DishImage';
 
 interface PageProps {
     lang: Language;
@@ -89,19 +90,11 @@ const Menu: React.FC<PageProps> = ({ lang }) => {
                             {/* Image Section */}
                             <div className="sm:w-2/5 h-64 sm:h-auto relative overflow-hidden">
                                 <div className="relative h-full overflow-hidden bg-stone-200">
-                                    {item.image ? (
-                                        <img
-                                            src={item.image}
-                                            alt={lang === Language.EN ? item.nameEn : item.nameJa}
-                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                                            loading="lazy"
-                                            decoding="async"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-stone-400">
-                                            <span className="font-serif italic opacity-50">No Image</span>
-                                        </div>
-                                    )}
+                                    <DishImage
+                                        src={item.image}
+                                        alt={lang === Language.EN ? item.nameEn : item.nameJa}
+                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                    />
                                     {/* This div was misplaced in the original instruction, assuming it's a badge for the image */}
                                     {/* If this badge is not intended to be here, please clarify */}
                                     {/* <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-brand-red font-bold shadow-sm border border-red-100"></div> */}

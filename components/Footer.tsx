@@ -1,6 +1,7 @@
 import React from 'react';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Clock } from 'lucide-react';
 import { Language } from '../types';
+import DeliveryPartners from './DeliveryPartners';
 
 interface FooterProps {
   lang: Language;
@@ -59,6 +60,11 @@ const Footer: React.FC<FooterProps> = ({ lang }) => {
                 </span>
               </li>
             </ul>
+
+            <h4 className="text-lg font-serif font-bold text-white mt-10 mb-4 border-b border-amber-600/30 pb-2 inline-block">
+              {lang === Language.EN ? "Order Delivery" : "デリバリー"}
+            </h4>
+            <DeliveryPartners lang={lang} variant="compact" />
           </div>
 
           {/* Column 3: Map */}

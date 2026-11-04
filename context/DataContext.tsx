@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { MenuItem, Review, GalleryItem, ContactMessage } from '../types';
 import { db, storage } from '../src/firebase';
+import { LOCAL_MENU_IMAGE_IDS, MENU_PRICE_OVERRIDES } from '../constants';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { ref, uploadString, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
@@ -65,7 +66,11 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   // Real-time Listeners
   useEffect(() => {
     const unsubMenu = onSnapshot(collection(db, 'menu'), (snapshot) => {
-      const items = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as MenuItem));
+      const items = snapshot.docs.map(doc => {
+        const item = { ...doc.data(), id: doc.id } as MenuItem;
+        if (LOCAL_MENU_IMAGE_IDS.has(item.id)) item.image = `/images/menu/${item.id}.webp`;
+        return { ...item, ...MENU_PRICE_OVERRIDES[item.id] };
+      });
       setMenuItems(items);
     });
 

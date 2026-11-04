@@ -519,3 +519,73 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: 'food'
   }
 ];
+// Delivery partners (direct Cafe Maemi store pages)
+export const DELIVERY_PARTNERS = [
+  {
+    id: 'ubereats',
+    name: 'Uber Eats',
+    url: 'https://www.ubereats.com/jp/store/cafe-maemi/SO2gqxsFWWOX7AnUAsU4GA?diningMode=DELIVERY',
+  },
+  {
+    id: 'rocketnow',
+    name: 'Rocket Now',
+    url: 'https://customer-web.rocketnow.co.jp/share?storeId=122903&dishId&key=ab8c428b-5e3a-4144-979c-93413c597e85',
+  },
+] as const;
+
+// Menu items with a local photo at /images/menu/<id>.webp (copied from the funfo POS menu,
+// because the Firebase Storage photos are no longer served)
+export const LOCAL_MENU_IMAGE_IDS = new Set<string>([
+  '1V5c3zIWtOuE1XXqt7QG',
+  '1VSQjckdeb20u8Tbjs0n',
+  '3JKjPcBNTWfAmLE78yxA',
+  '6vsJSVI47KlWOT81SCyA',
+  '8jql3sMVkj09Kv5vWkGe',
+  'BVWoxXMudgIymrjgmu9s',
+  'BkB2iqXqR0tRPNhhaplT',
+  'C5Jjf0K1yl4STctNYKpx',
+  'DwAXWaj7Jous1tspBFwx',
+  'EAhDKMzDrKFroezN9dHb',
+  'GH3ZyXB4MH8BIIP6qqpE',
+  'Gb6qX9eMtUQ3rfTJA6L6',
+  'GuF2orXYT1XzVmGdcQGS',
+  'H8jes8eGZJ9E0obkQUKZ',
+  'HJpfXUDAOl4fxP13wKrm',
+  'HUkbVHoTFEDl5raBAJAl',
+  'MpE9Zq53ViBqwSKcc3Cs',
+  'MuWBdxzdYJyrJq0tQoSh',
+  'Oz4qg3Gh7bpTeih8JqYJ',
+  'PDFf0tBiWQnjNl2HG06h',
+  'PftXnpbgJU0en9cl0jNf',
+  'R7AGUBIaykPEaPJhdzRB',
+  'TYQYwaGMoULvEgYGAnLQ',
+  'WVGu44VbBqcyyWERvu8Z',
+  'WlbC5a1cCU7GP7M7Gfvz',
+  'WuuFQwRIGnBVK6MaZvfz',
+  'X4aoDl6ERZprAIl1b9gg',
+  'XCu9nU9cU5aHh1ooSlbX',
+  'XG8VubfGrmnwpljrIxTr',
+  'XaWDlP0m9auiNiN914Ti',
+  'YDpKOMUOqR3KVOALXaXs',
+  'YS5SYUsNymwO0UPxAc44',
+  'ZeteasbzxHLERHfQmx6J',
+  'axCLP19UC6sdB1fR2BEg',
+  'dq2AbSUMPxJUyzfEhmst',
+  'eDb7ndhenbRcJ14GPChH',
+  'fy8nJPIg63DtbUu0mwoR',
+  'hN7EkYehfLEtu8Rq3ivZ',
+  'kyVfdAIa474tgbgk1Uz2',
+  'sDCdSnR1DG8aqqKDuBFp',
+  'v70JfuykP5nsjZ4PNlM0',
+  'vzVLtze6jqnqe9vtkQ9A',
+  'wIpJGSd8HTJm01ZQjFl7',
+  'wU626l6yWQqGF4wVkGyn',
+  'y028Fe2re9XslV5pPZG4',
+  'yVGiNtZ4DdTnst3pAHQb',
+  'zOQNeJek552uSHxcjfsD',
+]);
+
+// Prices that differ between Firestore and the funfo POS menu (funfo is current)
+export const MENU_PRICE_OVERRIDES: Record<string, { price: number; priceLarge?: number }> = {
+  yVGiNtZ4DdTnst3pAHQb: { price: 990, priceLarge: 1090 }, // Spinach curry set
+};

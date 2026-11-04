@@ -39,6 +39,10 @@
 }
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         @apply bg-brand-cream text-brand-red font-sans;
     }
