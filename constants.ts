@@ -589,3 +589,27 @@ export const LOCAL_MENU_IMAGE_IDS = new Set<string>([
 export const MENU_PRICE_OVERRIDES: Record<string, { price: number; priceLarge?: number }> = {
   yVGiNtZ4DdTnst3pAHQb: { price: 990, priceLarge: 1090 }, // Spinach curry set
 };
+
+// Gallery photos served from this site (the Firebase Storage gallery photos are no longer served)
+export const LOCAL_GALLERY: GalleryItem[] = [
+  { id: 'local-PftXnpbgJU0en9cl0jNf', src: '/images/menu/PftXnpbgJU0en9cl0jNf.webp', alt: 'Maemi Set A', altJa: 'マエミセット A', category: 'food', fit: 'contain' },
+  { id: 'local-XaWDlP0m9auiNiN914Ti', src: '/images/menu/XaWDlP0m9auiNiN914Ti.webp', alt: 'Special Nepali Rice Set', altJa: 'スペシャル ネパールライスセット', category: 'food', fit: 'contain' },
+  { id: 'local-3JKjPcBNTWfAmLE78yxA', src: '/images/menu/3JKjPcBNTWfAmLE78yxA.webp', alt: 'Steam MoMo', altJa: 'スチームギョウザ', category: 'food', fit: 'contain' },
+  { id: 'local-WlbC5a1cCU7GP7M7Gfvz', src: '/images/menu/WlbC5a1cCU7GP7M7Gfvz.webp', alt: 'Chicken Biryani', altJa: 'チキンビリヤニ', category: 'food', fit: 'contain' },
+  { id: 'local-EAhDKMzDrKFroezN9dHb', src: '/images/menu/EAhDKMzDrKFroezN9dHb.webp', alt: 'Nepali Chicken Khana Set', altJa: 'ネパール チキンカナ', category: 'food', fit: 'contain' },
+  { id: 'local-X4aoDl6ERZprAIl1b9gg', src: '/images/menu/X4aoDl6ERZprAIl1b9gg.webp', alt: 'Panipuri', altJa: 'パニプリ', category: 'food', fit: 'contain' },
+  { id: 'local-MuWBdxzdYJyrJq0tQoSh', src: '/images/menu/MuWBdxzdYJyrJq0tQoSh.webp', alt: 'Chicken Chilli', altJa: 'チキンチリ', category: 'food', fit: 'contain' },
+  { id: 'local-wIpJGSd8HTJm01ZQjFl7', src: '/images/menu/wIpJGSd8HTJm01ZQjFl7.webp', alt: 'Mango Lassi', altJa: 'マンゴーラッシー', category: 'drinks', fit: 'contain' },
+  { id: 'local-GH3ZyXB4MH8BIIP6qqpE', src: '/images/menu/GH3ZyXB4MH8BIIP6qqpE.webp', alt: 'Fried MoMo', altJa: 'フライギョウザ', category: 'food', fit: 'contain' },
+  { id: 'local-H8jes8eGZJ9E0obkQUKZ', src: '/images/menu/H8jes8eGZJ9E0obkQUKZ.webp', alt: 'Tandoori Chicken Leg', altJa: 'タンドリーチキンレッグ', category: 'food', fit: 'contain' },
+  { id: 'local-y028Fe2re9XslV5pPZG4', src: '/images/menu/y028Fe2re9XslV5pPZG4.webp', alt: 'Chicken ChowMein', altJa: 'チキンチョウメン', category: 'food', fit: 'contain' },
+  { id: 'local-WuuFQwRIGnBVK6MaZvfz', src: '/images/menu/WuuFQwRIGnBVK6MaZvfz.webp', alt: 'Soup MoMo', altJa: 'スープギョウザ', category: 'food', fit: 'contain' },
+  { id: 'local-R7AGUBIaykPEaPJhdzRB', src: '/images/menu/R7AGUBIaykPEaPJhdzRB.webp', alt: 'Chicken Kathi Roll', altJa: 'チキンカティロール', category: 'food', fit: 'contain' },
+  { id: 'local-ZeteasbzxHLERHfQmx6J', src: '/images/menu/ZeteasbzxHLERHfQmx6J.webp', alt: 'Himalayan Milk Tea', altJa: 'ヒマラヤ ミルクティー', category: 'drinks', fit: 'contain' },
+  { id: 'local-XCu9nU9cU5aHh1ooSlbX', src: '/images/menu/XCu9nU9cU5aHh1ooSlbX.webp', alt: 'Chatpate', altJa: 'チャトパテ', category: 'food', fit: 'contain' },
+  { id: 'local-HUkbVHoTFEDl5raBAJAl', src: '/images/menu/HUkbVHoTFEDl5raBAJAl.webp', alt: 'Chilly MoMo', altJa: 'チリギョウザ', category: 'food', fit: 'contain' },
+  { id: 'local-1V5c3zIWtOuE1XXqt7QG', src: '/images/menu/1V5c3zIWtOuE1XXqt7QG.webp', alt: 'Chicken Roast Fry', altJa: 'チキンローストフライ', category: 'food', fit: 'contain' },
+  { id: 'local-v70JfuykP5nsjZ4PNlM0', src: '/images/menu/v70JfuykP5nsjZ4PNlM0.webp', alt: 'Samosa & Tarkari', altJa: 'サモサ＆タルカリ', category: 'food', fit: 'contain' },
+  { id: 'local-WVGu44VbBqcyyWERvu8Z', src: '/images/menu/WVGu44VbBqcyyWERvu8Z.webp', alt: 'Nepali Mutton Khana Set', altJa: 'ネパール マトンカナ', category: 'food', fit: 'contain' },
+  { id: 'local-dq2AbSUMPxJUyzfEhmst', src: '/images/menu/dq2AbSUMPxJUyzfEhmst.webp', alt: 'Mango Coconut Lassi', altJa: 'マンゴーココナツラッシー', category: 'drinks', fit: 'contain' },
+];

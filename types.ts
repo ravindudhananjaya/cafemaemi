@@ -30,7 +30,10 @@ export interface GalleryItem {
   id: string;
   src: string;
   alt: string;
+  altJa?: string;
   category?: string;
+  // 'contain' for product cut-out photos that should not be cropped
+  fit?: 'cover' | 'contain';
 }
 
 export interface ContactMessage {

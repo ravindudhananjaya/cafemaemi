@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { MenuItem, Review, GalleryItem, ContactMessage } from '../types';
 import { db, storage } from '../src/firebase';
-import { LOCAL_MENU_IMAGE_IDS, MENU_PRICE_OVERRIDES } from '../constants';
+import { LOCAL_GALLERY, LOCAL_MENU_IMAGE_IDS, MENU_PRICE_OVERRIDES } from '../constants';
 import { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { ref, uploadString, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
@@ -80,8 +80,11 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     });
 
     const unsubGallery = onSnapshot(collection(db, 'gallery'), (snapshot) => {
-      const items = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as GalleryItem));
-      setGalleryItems(items);
+      const items = snapshot.docs
+        .map(doc => ({ ...doc.data(), id: doc.id } as GalleryItem))
+        // Firebase Storage photos no longer load, so only keep photos hosted elsewhere
+        .filter(item => !item.src.includes('firebasestorage.googleapis.com'));
+      setGalleryItems([...LOCAL_GALLERY, ...items]);
     });
 
     const messagesQuery = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));

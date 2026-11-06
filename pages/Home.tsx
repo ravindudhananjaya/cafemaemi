@@ -23,7 +23,7 @@ const Home: React.FC<PageProps> = ({ lang }) => {
   const recentReviews = reviews.slice(0, 4);
 
   // Get recent gallery images (top 4)
-  const recentGallery = galleryItems.slice(0, 4);
+  const recentGallery = galleryItems.filter(item => item.fit !== 'cover').slice(0, 4);
 
   const base = `/${lang === Language.EN ? 'en' : 'ja'}`;
 
@@ -242,11 +242,11 @@ const Home: React.FC<PageProps> = ({ lang }) => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {recentGallery.map((item, idx) => (
-              <div key={item.id} className={`h-64 overflow-hidden rounded-lg border-2 border-amber-900/50 hover:border-amber-500 transition-colors ${idx % 2 !== 0 ? 'mt-8 md:mt-12' : ''}`}>
+              <div key={item.id} className={`h-64 overflow-hidden rounded-lg border-2 border-amber-900/50 hover:border-amber-500 transition-colors ${item.fit === 'contain' ? 'bg-gradient-to-br from-white to-amber-50' : ''} ${idx % 2 !== 0 ? 'mt-8 md:mt-12' : ''}`}>
                 <img
                   src={item.src}
-                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-all duration-500 hover:scale-110"
-                  alt={item.alt}
+                  className={`w-full h-full transition-all duration-500 hover:scale-110 ${item.fit === 'contain' ? 'object-contain p-4' : 'object-cover opacity-80 hover:opacity-100'}`}
+                  alt={lang === Language.JA && item.altJa ? item.altJa : item.alt}
                   loading="lazy"
                   decoding="async"
                 />
