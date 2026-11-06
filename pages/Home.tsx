@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Language } from '../types';
 import { TEXTS } from '../constants';
-import { ArrowRight, Star, ChevronDown, Quote, Bike } from 'lucide-react';
+import { ArrowRight, Star, ChevronDown, Quote, Bike, Clock, Flame, MapPin, Phone, CalendarX } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import SEO from '../components/SEO';
 import DeliveryPartners from '../components/DeliveryPartners';
 import DishImage from '../components/DishImage';
+import HowToOrder from '../components/HowToOrder';
+import Reveal from '../components/Reveal';
+import { Toran, BlockPrintBorder, Mandala } from '../components/IndianOrnaments';
 
 interface PageProps {
   lang: Language;
@@ -70,21 +73,27 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             <div className="flex flex-col sm:flex-row items-start gap-6">
               <Link
                 to={`${base}/menu`}
-                className="px-10 py-4 bg-amber-600 text-white font-bold rounded-sm hover:bg-amber-700 transition duration-300 shadow-lg shadow-amber-900/50 flex items-center gap-3 group"
+                className="px-10 py-4 bg-amber-600 text-white font-bold rounded-full hover:bg-amber-700 transition duration-300 shadow-lg shadow-amber-900/50 flex items-center gap-3 group"
               >
                 {TEXTS.viewMenu[lang.toLowerCase()]}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="#delivery"
-                className="px-10 py-4 border border-white/40 text-white font-bold rounded-sm hover:bg-white/10 hover:border-amber-400 transition duration-300 backdrop-blur-sm flex items-center gap-3"
+                className="px-10 py-4 border border-white/40 text-white font-bold rounded-full hover:bg-white/10 hover:border-amber-400 transition duration-300 backdrop-blur-sm flex items-center gap-3"
               >
                 <Bike size={20} className="text-amber-400" />
                 {lang === Language.EN ? "Order Delivery" : "デリバリー注文"}
               </a>
             </div>
 
-            <div className="mt-10">
+            <ul className="mt-8 flex flex-wrap gap-2 text-sm text-amber-50">
+              <li className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15"><Clock size={14} className="text-amber-400" />11:00 – 20:00</li>
+              <li className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15"><CalendarX size={14} className="text-amber-400" />{lang === Language.EN ? "Closed Sundays" : "日曜定休"}</li>
+              <li className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15"><Flame size={14} className="text-amber-400" />{lang === Language.EN ? "5 spice levels" : "辛さ5段階"}</li>
+            </ul>
+
+            <div className="mt-6">
               <DeliveryPartners lang={lang} variant="badges" />
             </div>
           </div>
@@ -94,6 +103,10 @@ const Home: React.FC<PageProps> = ({ lang }) => {
           <ChevronDown className="text-amber-500/50" size={40} />
         </div>
       </section>
+
+      <Toran className="bg-brand-cream" />
+      <HowToOrder lang={lang} />
+      <BlockPrintBorder className="bg-brand-cream" />
 
       {/* Intro Section / Our Story */}
       <section className="py-32 px-4 bg-brand-cream relative overflow-hidden">
@@ -156,26 +169,28 @@ const Home: React.FC<PageProps> = ({ lang }) => {
       {/* Menu Highlights Section */}
       <section className="py-24 bg-white relative border-t border-amber-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <Reveal className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-brand-red mb-4">
               {lang === Language.EN ? "Chef's Favorites" : "シェフのおすすめ"}
             </h2>
-            <div className="w-24 h-1 bg-amber-500 mx-auto"></div>
-          </div>
+            <div className="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {featuredItems.map((item) => (
-              <div key={item.id} className="group cursor-pointer">
-                <div className="relative h-64 overflow-hidden rounded-t-2xl mb-4 shadow-md bg-stone-200">
+            {featuredItems.map((item, idx) => (
+              <Reveal key={item.id} delay={idx * 120}>
+              <div className="group cursor-pointer bg-white rounded-3xl p-3 pb-6 shadow-sm hover:shadow-xl border border-amber-100 transition-all duration-500 hover:-translate-y-1">
+                <div className="relative h-64 overflow-hidden rounded-2xl mb-5 bg-gradient-to-br from-white to-amber-50">
                   <DishImage
                     src={item.image}
                     alt={lang === Language.EN ? item.nameEn : item.nameJa}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-contain p-4 transform group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-brand-red font-bold shadow-sm border border-red-100">
-                    ¥{item.price}
+                    ¥{item.price.toLocaleString()}
                   </div>
                 </div>
+                <div className="px-3">
                 <h3 className="text-xl font-bold text-brand-red mb-2 font-serif group-hover:text-amber-600 transition-colors">
                   {lang === Language.EN ? item.nameEn : item.nameJa}
                 </h3>
@@ -185,12 +200,14 @@ const Home: React.FC<PageProps> = ({ lang }) => {
                 <Link to={`${base}/menu`} className="text-amber-600 text-sm font-bold uppercase tracking-wider hover:text-brand-red flex items-center gap-1 group-hover:gap-2 transition-all">
                   {lang === Language.EN ? "View Details" : "詳細を見る"} <ArrowRight size={14} />
                 </Link>
+                </div>
               </div>
+              </Reveal>
             ))}
           </div>
 
           <div className="mt-16 text-center">
-            <Link to={`${base}/menu`} className="inline-block border-2 border-brand-red text-brand-red px-10 py-3 font-bold hover:bg-brand-red hover:text-white transition-colors duration-300 rounded-sm uppercase tracking-widest">
+            <Link to={`${base}/menu`} className="inline-block border-2 border-brand-red text-brand-red px-10 py-3 font-bold hover:bg-brand-red hover:text-white transition-colors duration-300 rounded-full uppercase tracking-widest">
               {TEXTS.viewMenu[lang.toLowerCase()]}
             </Link>
           </div>
@@ -293,6 +310,50 @@ const Home: React.FC<PageProps> = ({ lang }) => {
         </div>
       </section>
 
+      {/* Shop Info Section */}
+      <section className="py-24 bg-brand-cream relative overflow-hidden">
+        <Mandala className="absolute -left-40 bottom-0 w-[30rem] h-[30rem] text-amber-600/10 animate-[spin_160s_linear_infinite] motion-reduce:animate-none" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Reveal className="text-center mb-12">
+            <span className="inline-block px-4 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold tracking-[0.2em] mb-4">
+              {lang === Language.EN ? "SHOP INFO" : "店舗情報"}
+            </span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-brand-red">
+              {lang === Language.EN ? "Come Visit Us" : "ご来店お待ちしております"}
+            </h2>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: Clock, label: lang === Language.EN ? "Hours" : "営業時間", value: lang === Language.EN ? "Mon – Sat 11:00 – 20:00" : "月〜土 11:00〜20:00" },
+              { icon: CalendarX, label: lang === Language.EN ? "Closed" : "定休日", value: lang === Language.EN ? "Sundays" : "日曜日" },
+              { icon: Phone, label: lang === Language.EN ? "Phone" : "お電話", value: "027-212-3622", href: "tel:0272123622" },
+              { icon: MapPin, label: lang === Language.EN ? "Address" : "住所", value: lang === Language.EN ? "3-34-11 Minamicho, Maebashi" : "前橋市南町3-34-11 玉井ビル1F", href: "https://maps.app.goo.gl/MznqEuTyFZ72EY9N6" },
+            ].map((info, idx) => {
+              const body = (
+                <div className="h-full bg-white rounded-3xl p-6 border border-amber-100 shadow-sm hover:shadow-lg transition-shadow duration-300 flex items-start gap-4">
+                  <div className="w-11 h-11 shrink-0 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <info.icon size={20} />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold tracking-widest text-amber-700 mb-1">{info.label}</div>
+                    <div className="text-brand-red font-bold leading-snug">{info.value}</div>
+                  </div>
+                </div>
+              );
+              return (
+                <Reveal key={info.label} delay={idx * 100} className="h-full">
+                  {info.href
+                    ? <a href={info.href} target={info.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="block h-full">{body}</a>
+                    : body}
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <BlockPrintBorder className="bg-red-950" tone="dark" />
       {/* Call to Action Section */}
       <section className="py-24 bg-gradient-to-r from-brand-red to-amber-950 text-white text-center relative overflow-hidden">
         {/* Background Decoration */}
@@ -307,10 +368,10 @@ const Home: React.FC<PageProps> = ({ lang }) => {
             {lang === Language.EN ? "Experience the true taste of India and Nepal. Book your table now or order online for a taste of royalty." : "インドとネパールの真の味を体験してください。今すぐ予約するか、オンラインで注文して、王宮の味をお楽しみください。"}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <a href="https://maps.app.goo.gl/MznqEuTyFZ72EY9N6" target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-amber-500 text-brand-red font-bold rounded-sm hover:bg-amber-400 transition shadow-xl shadow-amber-900/50 uppercase tracking-widest">
+            <a href="https://maps.app.goo.gl/MznqEuTyFZ72EY9N6" target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-amber-500 text-brand-red font-bold rounded-full hover:bg-amber-400 transition shadow-xl shadow-amber-900/50 uppercase tracking-widest">
               {lang === Language.EN ? "Visit Us" : "店舗に行く"}
             </a>
-            <Link to={`${base}/menu`} className="px-10 py-4 border-2 border-amber-500 text-amber-500 font-bold rounded-sm hover:bg-amber-500/10 transition uppercase tracking-widest">
+            <Link to={`${base}/menu`} className="px-10 py-4 border-2 border-amber-500 text-amber-500 font-bold rounded-full hover:bg-amber-500/10 transition uppercase tracking-widest">
               {TEXTS.viewMenu[lang.toLowerCase()]}
             </Link>
           </div>

@@ -34,6 +34,7 @@ const LanguageLayout: React.FC = () => {
   }
 
   const currentLang = lang === 'ja' ? Language.JA : Language.EN;
+  document.documentElement.lang = lang;
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-cream text-brand-red font-sans selection:bg-amber-500/30">

@@ -17,7 +17,7 @@
     --color-amber-900: #78350f;
     --color-amber-950: #451a03;
 
-    --font-serif: "Playfair Display", serif;
+    --font-serif: "Playfair Display", "Zen Maru Gothic", serif;
     --font-sans: "Noto Sans JP", sans-serif;
 
     --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
@@ -41,6 +41,12 @@
 @layer base {
     html {
         scroll-behavior: smooth;
+    }
+
+    /* Break Japanese text at natural phrase boundaries instead of mid-word */
+    html:lang(ja) {
+        word-break: auto-phrase;
+        line-break: strict;
     }
 
     body {
@@ -75,4 +81,10 @@
     .glass-panel {
         @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
     }
+}
+
+/* Outside any layer so it wins over the font-serif utility: a rounded gothic reads warmer
+   and keeps digits consistent in Japanese headings */
+html:lang(ja) :is(h1, h2, h3) {
+    font-family: "Zen Maru Gothic", "Playfair Display", serif;
 }
